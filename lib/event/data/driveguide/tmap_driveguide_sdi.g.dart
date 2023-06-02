@@ -1,0 +1,107 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'tmap_driveguide_sdi.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+TmapDriveGuideSDI _$TmapDriveGuideSDIFromJson(Map<String, dynamic> json) =>
+    TmapDriveGuideSDI(
+      sdiType: $enumDecodeNullable(_$SDITypeEnumMap, json['sdi_type']) ??
+          SDIType.unknown,
+      sdiDistance: json['sdi_distance'] as int? ?? -1,
+      sdiSpeedLimit: json['sdi_speedlimit'] as int? ?? -1,
+      sdiIsBlockSection: json['sdi_is_block_section'] as bool? ?? false,
+      sdiBlockDistance: json['sdi_block_distance'] as int? ?? -1,
+      sdiBlockSpeed: json['sdi_block_speed'] as int? ?? -1,
+      sdiBlockAverageSpeed: json['sdi_block_average_speed'] as int? ?? -1,
+      sdiBlockTime: json['sdi_block_time'] as int? ?? -1,
+      isChangableSpeedType: json['is_changable_speed_type'] as bool? ?? false,
+      isLimitSpeedSignChanged:
+          json['is_limit_speed_sign_changed'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$TmapDriveGuideSDIToJson(TmapDriveGuideSDI instance) =>
+    <String, dynamic>{
+      'sdi_type': _$SDITypeEnumMap[instance.sdiType]!,
+      'sdi_distance': instance.sdiDistance,
+      'sdi_speedlimit': instance.sdiSpeedLimit,
+      'sdi_is_block_section': instance.sdiIsBlockSection,
+      'sdi_block_distance': instance.sdiBlockDistance,
+      'sdi_block_speed': instance.sdiBlockSpeed,
+      'sdi_block_average_speed': instance.sdiBlockAverageSpeed,
+      'sdi_block_time': instance.sdiBlockTime,
+      'is_changable_speed_type': instance.isChangableSpeedType,
+      'is_limit_speed_sign_changed': instance.isLimitSpeedSignChanged,
+    };
+
+const _$SDITypeEnumMap = {
+  SDIType.speedAccidentPos: 'speedAccidentPos',
+  SDIType.speedLimitPos: 'speedLimitPos',
+  SDIType.speedBlockStartPos: 'speedBlockStartPos',
+  SDIType.speedBlockEndPos: 'speedBlockEndPos',
+  SDIType.speedBlockMidPos: 'speedBlockMidPos',
+  SDIType.tail: 'tail',
+  SDIType.signalAccidentPos: 'signalAccidentPos',
+  SDIType.speedLimitDangerousArea: 'speedLimitDangerousArea',
+  SDIType.boxSpeedLimitPos: 'boxSpeedLimitPos',
+  SDIType.busLane: 'busLane',
+  SDIType.changeroadPos: 'changeroadPos',
+  SDIType.roadControlPos: 'roadControlPos',
+  SDIType.intruderArea: 'intruderArea',
+  SDIType.trafficinfoCollectPos: 'trafficinfoCollectPos',
+  SDIType.cctvArea: 'cctvArea',
+  SDIType.overloadDangerousArea: 'overloadDangerousArea',
+  SDIType.loadBadControlPos: 'loadBadControlPos',
+  SDIType.parkingControlPos: 'parkingControlPos',
+  SDIType.oneWayArea: 'oneWayArea',
+  SDIType.railwayCrossing: 'railwayCrossing',
+  SDIType.schoolZoneStart: 'schoolZoneStart',
+  SDIType.schoolZoneEnd: 'schoolZoneEnd',
+  SDIType.speedbump: 'speedbump',
+  SDIType.lpgStation: 'lpgStation',
+  SDIType.tunnelArea: 'tunnelArea',
+  SDIType.serviceArea: 'serviceArea',
+  SDIType.tollgate: 'tollgate',
+  SDIType.fogArea: 'fogArea',
+  SDIType.hazardousArea: 'hazardousArea',
+  SDIType.accidentArea: 'accidentArea',
+  SDIType.sharpCurveArea: 'sharpCurveArea',
+  SDIType.newCurveArea: 'newCurveArea',
+  SDIType.slopeArea: 'slopeArea',
+  SDIType.roadKillArea: 'roadKillArea',
+  SDIType.visualRightArea: 'visualRightArea',
+  SDIType.visualFrontArea: 'visualFrontArea',
+  SDIType.visualLeftArea: 'visualLeftArea',
+  SDIType.signalViolationArea: 'signalViolationArea',
+  SDIType.speedDrivingArea: 'speedDrivingArea',
+  SDIType.trafficCongestArea: 'trafficCongestArea',
+  SDIType.directionLane: 'directionLane',
+  SDIType.walkCrossArea: 'walkCrossArea',
+  SDIType.roadAccidentArea: 'roadAccidentArea',
+  SDIType.speedAccidentArea: 'speedAccidentArea',
+  SDIType.sleepAccidentArea: 'sleepAccidentArea',
+  SDIType.accidentPos: 'accidentPos',
+  SDIType.pedestrianAccidentPos: 'pedestrianAccidentPos',
+  SDIType.vehicleBurglaryPos: 'vehicleBurglaryPos',
+  SDIType.fallingArea: 'fallingArea',
+  SDIType.freezingArea: 'freezingArea',
+  SDIType.bottleneckPoint: 'bottleneckPoint',
+  SDIType.mergePoint: 'mergePoint',
+  SDIType.crashArea: 'crashArea',
+  SDIType.undergroundArea: 'undergroundArea',
+  SDIType.trafficCalmingArea: 'trafficCalmingArea',
+  SDIType.interchange: 'interchange',
+  SDIType.junction: 'junction',
+  SDIType.serviceAreaLpg: 'serviceAreaLpg',
+  SDIType.bridge: 'bridge',
+  SDIType.hwa03: 'hwa03',
+  SDIType.hwa06: 'hwa06',
+  SDIType.hwa09: 'hwa09',
+  SDIType.goalOpposite: 'goalOpposite',
+  SDIType.restPlace: 'restPlace',
+  SDIType.sdiExhaustGasGrade: 'sdiExhaustGasGrade',
+  SDIType.sdiTunnelChangeLanePos: 'sdiTunnelChangeLanePos',
+  SDIType.unknown: 'unknown',
+};
