@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName
 import com.skt.tmap.engine.navigation.network.ndds.CarOilType
 import com.skt.tmap.engine.navigation.network.ndds.TollCarType
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
+import com.tmapmobility.tmap.tmapsdk.ui.data.FontSize
+import com.tmapmobility.tmap.tmapsdk.ui.data.MapSetting
+import com.tmapmobility.tmap.tmapsdk.ui.data.NightMode
 import com.tmapmobility.tmap.tmapsdk.ui.data.TruckInfoKey
 
 data class CarOptionModel(
@@ -16,6 +19,7 @@ data class CarOptionModel(
     @SerializedName("night_mode") var night_mode: String? = null,
     @SerializedName("is_use_speed_react_map_scale") var is_use_speed_react_map_scale: Boolean = false,
     @SerializedName("is_show_traffic_in_route") var is_show_traffic_in_route: Boolean = false,
+    @SerializedName("is_show_exit_popup_when_stop_driving") var is_show_exit_popup_when_stop_driving: Boolean = true,
 ) {
     companion object {
         fun create(jsonString: String): CarOption {
@@ -28,6 +32,36 @@ data class CarOptionModel(
                 truckInfo = data.truck_option?.let { getTruckInfo(it) }
             }
         }
+
+        fun createMapSetting(jsonString: String): MapSetting {
+            val gson = Gson()
+            val data = gson.fromJson(jsonString, CarOptionModel::class.java)
+            return MapSetting().apply {
+                mapFontSize = getMapSettingFontSize( data.map_text_size ?: "")
+                isUseNightMode = getMapSettingNightMode( data.night_mode ?: "")
+                isUseSpeedReactMapScale = data.is_use_speed_react_map_scale
+                isShowTrafficInfo = data.show_traffic_accident
+                isShowClosedPopup = data.is_show_exit_popup_when_stop_driving
+            }
+        }
+    }
+}
+
+fun getMapSettingFontSize(type: String): FontSize {
+    return when (type) {
+        "작게" -> FontSize.SMALL
+        "보통" -> FontSize.NORMAL
+        "크게" -> FontSize.LARGE
+        else -> FontSize.NORMAL
+    }
+}
+
+fun getMapSettingNightMode(type: String): NightMode {
+    return when (type) {
+        "자동" -> NightMode.AUTO
+        "항상 사용" -> NightMode.ALWAYS_ON
+        "사용 안함" -> NightMode.ALWAYS_OFF
+        else -> NightMode.AUTO
     }
 }
 

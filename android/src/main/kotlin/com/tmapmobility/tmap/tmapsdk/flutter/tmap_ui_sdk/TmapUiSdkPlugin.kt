@@ -11,6 +11,7 @@ import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
 import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.TmapUiSdkFactory
+import com.tmapmobility.tmap.tmapsdk.ui.data.MapSetting
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -68,10 +69,13 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
       "configSDK" -> {
         val carOption: CarOption? =
           call.argument<String>("args")?.let { CarOptionModel.create(it) }
-        if (carOption == null) {
+        val mapSetting: MapSetting? =
+          call.argument<String>("args")?.let { CarOptionModel.createMapSetting(it) }
+        if (carOption == null || mapSetting == null) {
           result.success("false")
         } else {
           PreferenceUtils.carOption = carOption
+          PreferenceUtils.mapSetting = mapSetting
           result.success("true")
         }
       }

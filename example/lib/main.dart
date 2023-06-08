@@ -113,7 +113,8 @@ class _TmapExamplePageState extends State<TmapExamplePage> {
         mapTextSize: UISDKMapFontSize.large,
         nightMode: UISDKAutoNightModeType.auto,
         isUseSpeedReactMapScale: true,
-        isShowTrafficInRoute: true);
+        isShowTrafficInRoute: true,
+        isShowExitPopupWhenStopDriving: false);
     var manager = TmapUISDKManager();
 
     bool? result = await manager.setConfigSDK(config);
@@ -127,10 +128,11 @@ class _TmapExamplePageState extends State<TmapExamplePage> {
         carType: UISDKCarModel.normal,
         fuelType: UISDKFuel.diesel,
         showTrafficAccident: true,
-        mapTextSize: UISDKMapFontSize.large,
+        mapTextSize: UISDKMapFontSize.small,
         nightMode: UISDKAutoNightModeType.auto,
         isUseSpeedReactMapScale: true,
-        isShowTrafficInRoute: true);
+        isShowTrafficInRoute: true,
+        isShowExitPopupWhenStopDriving: true);
     var manager = TmapUISDKManager();
 
     bool? result = await manager.setConfigSDK(config);

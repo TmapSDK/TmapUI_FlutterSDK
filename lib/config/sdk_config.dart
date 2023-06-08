@@ -104,6 +104,10 @@ class SDKConfig {
   @JsonKey(name: 'is_show_traffic_in_route')
   bool isShowTrafficInRoute = true;
 
+  /// 경로안내 종료 시 popup on/off
+  @JsonKey(name: 'is_show_exit_popup_when_stop_driving')
+  bool isShowExitPopupWhenStopDriving = true;
+
   SDKConfig({this.carType = UISDKCarModel.normal,
     this.truckOption = null,
     this.fuelType = UISDKFuel.gas,
@@ -111,7 +115,8 @@ class SDKConfig {
     this.mapTextSize = UISDKMapFontSize.medium,
     this.nightMode = UISDKAutoNightModeType.auto,
     this.isUseSpeedReactMapScale = true,
-    this.isShowTrafficInRoute = true});
+    this.isShowTrafficInRoute = true,
+    this.isShowExitPopupWhenStopDriving = true});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory SDKConfig.fromJson(Map<String, dynamic> json) => _$SDKConfigFromJson(json);

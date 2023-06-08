@@ -25,6 +25,8 @@ SDKConfig _$SDKConfigFromJson(Map<String, dynamic> json) => SDKConfig(
       isUseSpeedReactMapScale:
           json['is_use_speed_react_map_scale'] as bool? ?? true,
       isShowTrafficInRoute: json['is_show_traffic_in_route'] as bool? ?? true,
+      isShowExitPopupWhenStopDriving:
+          json['is_show_exit_popup_in_stop_driving'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$SDKConfigToJson(SDKConfig instance) => <String, dynamic>{
@@ -36,6 +38,8 @@ Map<String, dynamic> _$SDKConfigToJson(SDKConfig instance) => <String, dynamic>{
       'night_mode': _$UISDKAutoNightModeTypeEnumMap[instance.nightMode]!,
       'is_use_speed_react_map_scale': instance.isUseSpeedReactMapScale,
       'is_show_traffic_in_route': instance.isShowTrafficInRoute,
+      'is_show_exit_popup_when_stop_driving':
+          instance.isShowExitPopupWhenStopDriving,
     };
 
 const _$UISDKCarModelEnumMap = {

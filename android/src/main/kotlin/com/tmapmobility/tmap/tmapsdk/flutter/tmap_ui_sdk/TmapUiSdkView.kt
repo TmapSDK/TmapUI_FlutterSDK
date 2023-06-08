@@ -27,6 +27,7 @@ import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.drive_guide.TmapDriveGuideModel
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.utils.PreferenceUtils
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
+import com.tmapmobility.tmap.tmapsdk.ui.data.MapSetting
 import com.tmapmobility.tmap.tmapsdk.ui.fragment.NavigationFragment
 import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
 import io.flutter.embedding.engine.mutatorsstack.FlutterMutatorView
@@ -194,6 +195,12 @@ class TmapUiSdkView(
       isNotMyParentFromFlutter // parent가 flutter에서 붙인 view가 아니라면 parent를 삭제
     ) {
       (fragmentContainer.parent as ViewGroup).removeView(fragmentContainer as ViewGroup)
+
+      val mapSetting: MapSetting? = PreferenceUtils.mapSetting
+      if (mapSetting != null) {
+        navigationFragment.setSettings(mapSetting)
+      }
+
       if (navigationRequestModel != null) {
         if (navigationRequestModel.safeDriving) {
           navigationFragment.startSafeDrive()
