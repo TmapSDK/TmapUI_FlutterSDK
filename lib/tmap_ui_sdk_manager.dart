@@ -1,10 +1,22 @@
-import 'package:tmap_ui_sdk/config/sdk_config.dart';
+import 'dart:async';
+
 import 'package:tmap_ui_sdk/config/marker/uisdk_marker_config.dart';
-import 'package:tmap_ui_sdk/route/data/route_request_data.dart';
+import 'package:tmap_ui_sdk/config/sdk_config.dart';
+import 'package:tmap_ui_sdk/event/data/driveStatus/tmap_drivestatus.dart';
+import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide.dart';
+import 'package:tmap_ui_sdk/event/data/markerStatus/marker_status.dart';
+import 'package:tmap_ui_sdk/event/data/sdkStatus/tmap_sdk_status.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_method_channel.dart';
+import 'package:tmap_ui_sdk/tmap_ui_sdk_platform_interface.dart';
 
 import 'auth/data/auth_data.dart';
 import 'auth/data/init_result.dart';
+
+// ignore_for_file: camel_case_types
+typedef onTmapSDKStatusAvailable = Function(TmapSDKStatus status);
+typedef onMarkerStatusAvailable = Function(MarkerStatus status);
+typedef onTmapDriveGuideAvailable = Function(TmapDriveGuide guide);
+typedef onTmapDriveStatusAvailable = Function(TmapDriveStatus status);
 
 class TmapUISDKManager {
   TmapUISDKManager._privateConstructor();
@@ -40,5 +52,69 @@ class TmapUISDKManager {
     MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
     final result = await channel.configMarker(configInfo);
     return result;
+  }
+
+  StreamSubscription<TmapSDKStatus>? _tmapSDKStatusStreamSubscription;
+
+  Future<void> startTmapSDKStatusStream(
+      onTmapSDKStatusAvailable onAvailable) async {
+    _tmapSDKStatusStreamSubscription = TmapUiSdkPlatform.instance
+        .onStreamedTmapSDKStatus()
+        .listen((TmapSDKStatus status) {
+      onAvailable(status);
+    });
+  }
+
+  Future<void> stopTmapSDKStatusStream() async {
+    await _tmapSDKStatusStreamSubscription?.cancel();
+    _tmapSDKStatusStreamSubscription = null;
+  }
+
+  StreamSubscription<MarkerStatus>? _markerStatusStreamSubscription;
+
+  Future<void> startMarkerStatusStream(
+      onMarkerStatusAvailable onAvailable) async {
+    _markerStatusStreamSubscription = TmapUiSdkPlatform.instance
+        .onStreamedMarkerStatus()
+        .listen((MarkerStatus status) {
+      onAvailable(status);
+    });
+  }
+
+  Future<void> stopMarkerStatusStream() async {
+    await _markerStatusStreamSubscription?.cancel();
+    _markerStatusStreamSubscription = null;
+  }
+
+  StreamSubscription<TmapDriveGuide>? _tmapDriveGuideStreamSubscription;
+
+  Future<void> startTmapDriveGuideStream(
+      onTmapDriveGuideAvailable onAvailable) async {
+    _tmapDriveGuideStreamSubscription = TmapUiSdkPlatform.instance
+        .onStreamedTmapDriveGuide()
+        .listen((TmapDriveGuide guide) {
+      onAvailable(guide);
+    });
+  }
+
+  Future<void> stopTmapDriveGuideStream() async {
+    await _tmapDriveGuideStreamSubscription?.cancel();
+    _tmapDriveGuideStreamSubscription = null;
+  }
+
+  StreamSubscription<TmapDriveStatus>? _tmapDriveStatusStreamSubscription;
+
+  Future<void> startTmapDriveStatusStream(
+      onTmapDriveStatusAvailable onAvailable) async {
+    _tmapDriveStatusStreamSubscription = TmapUiSdkPlatform.instance
+        .onStreamedTmapDriveStatus()
+        .listen((TmapDriveStatus status) {
+      onAvailable(status);
+    });
+  }
+
+  Future<void> stopTmapDriveStatusStream() async {
+    await _tmapDriveStatusStreamSubscription?.cancel();
+    _tmapDriveStatusStreamSubscription = null;
   }
 }
