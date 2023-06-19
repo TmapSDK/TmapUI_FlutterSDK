@@ -1,3 +1,6 @@
+## 1.0.3
+* Flutter 3.7.0/Dart 2.19.0 SDK 최소 버전 환경 세팅
+
 ## 1.0.2
 * go_routes 이용 하여 sample app 수정
 * 주행 화면의 flutter appbar 제거

@@ -1,11 +1,11 @@
 name: tmap_ui_sdk
 description: TmapUISDK for flutter
-version: '1.0.2'
+version: '1.0.3'
 homepage:
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
-  flutter: ">=2.5.0"
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.7.0"
 
 dependencies:
   flutter:
