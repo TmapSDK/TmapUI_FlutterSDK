@@ -29,15 +29,27 @@ class _RootPageState extends State<RootPage> {
   String _platformVersion = 'Unknown';
   String _initStatus = "Unknown";
   final _tmapUiSdkPlugin = TmapUiSdk();
+  InitResult tmapUISDKInitResult = InitResult.notGranted;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    LocationUtils.requestLocationPermission(
+        context,
+        onGranted: () {
+          initPlatformState();
+        }
+    );
   }
 
+  bool isInitWorking = false;
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
+    if (isInitWorking) {
+      CommonToast.show('TmapUISDK 초기화 진행 중 입니다.');
+      return;
+    }
+    isInitWorking = true;
     String platformVersion;
     String initStatus = InitResult.notGranted.text;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -56,7 +68,9 @@ class _RootPageState extends State<RootPage> {
           clientDeviceId: ""
       );
       InitResult result = await manager.initSDK(authInfo) ?? InitResult.notGranted;
+      tmapUISDKInitResult = result;
       initStatus = result.text;
+      CommonToast.show('TmapUISDK $initStatus');
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -70,6 +84,7 @@ class _RootPageState extends State<RootPage> {
       _platformVersion = platformVersion;
       _initStatus = initStatus;
     });
+    isInitWorking = false;
   }
 
   Future<bool?> setTruckConfig() async {
@@ -141,6 +156,13 @@ class _RootPageState extends State<RootPage> {
     return file.path;
   }
 
+  Future<bool> checkTmapUISDK() async {
+    if (tmapUISDKInitResult == InitResult.notGranted) {
+      await initPlatformState();
+    }
+    return tmapUISDKInitResult == InitResult.granted;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,29 +198,25 @@ class _RootPageState extends State<RootPage> {
                 ),
                 TextButton(
                   style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),),
-                  onPressed: () {
-                    if (_initStatus != InitResult.granted.text) return;
+                  onPressed: () async {
+                    if (!(await checkTmapUISDK())) return;
 
-                    LocationUtils.requestLocationPermission(
-                        context,
-                        onGranted: () {
-                          DriveModel.safeDriving = false;
-                          context.go(AppRoutes.drivePage);
-                        }
-                    );
+                    DriveModel.safeDriving = false;
+                    if (context.mounted) {
+                      context.go(AppRoutes.drivePage);
+                    }
                   },
                   child: const Text('DriveTest'),
                 ),
                 TextButton(
                   style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),),
-                  onPressed: () {
-                    LocationUtils.requestLocationPermission(
-                        context,
-                        onGranted: () {
-                          DriveModel.safeDriving = true;
-                          context.go(AppRoutes.drivePage);
-                        }
-                    );
+                  onPressed: () async {
+                    if (!(await checkTmapUISDK())) return;
+
+                    DriveModel.safeDriving = true;
+                    if (context.mounted) {
+                      context.go(AppRoutes.drivePage);
+                    }
                   },
                   child: const Text('SafeDrive'),
                 ),

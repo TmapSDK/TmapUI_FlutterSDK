@@ -1,3 +1,7 @@
+## 1.0.4
+* readme 수정
+* example app의 위치 권한 획득관련 수정
+
 ## 1.0.3
 * Flutter 3.7.0/Dart 2.19.0 SDK 최소 버전 환경 세팅
 

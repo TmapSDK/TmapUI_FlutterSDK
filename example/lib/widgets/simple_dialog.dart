@@ -72,7 +72,9 @@ Future<T> simpleDialog<T>({
                         child: InkWell(
                           onTap: () {
                             onLeftBtnPressed?.call();
-                            Navigator.pop(context);
+                            if (shouldDismissOnTouchOutside) {
+                              Navigator.pop(context);
+                            }
                           },
                           child: Container(
                             width: double.infinity,
@@ -96,7 +98,9 @@ Future<T> simpleDialog<T>({
                         child: InkWell(
                           onTap: () {
                             onRightBtnPressed?.call();
-                            Navigator.pop(context);
+                            if (shouldDismissOnTouchOutside) {
+                              Navigator.pop(context);
+                            }
                           },
                           child: Container(
                             width: double.infinity,

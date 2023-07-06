@@ -11,11 +11,19 @@ class LocationUtils {
         simpleDialog(
           context: context,
           titleText: '위치 권한이 필요 합니다.',
-          leftButtonText: '나중에',
           rightButtonText: '권한 설정 하기',
-          onRightBtnPressed: () {
-            openAppSettings();
+          onRightBtnPressed: () async {
+            final ps = await _requestLocationPermission();
+            if (ps != true) {
+              openAppSettings();
+            } else {
+              if (context.mounted) {
+                onGranted();
+                Navigator.pop(context);
+              }
+            }
           },
+          shouldDismissOnTouchOutside: false,
         );
       }
     } else {

@@ -7,6 +7,8 @@ Flutter에서 TmapUISDK를 사용하기 위한 plugin입니다.
 ## Getting Started
 TmapUISDK는 인증정보를 입력받아 초기화를 진행한 뒤,   
 주행안내와 관련된 기능을 수행할 수 있습니다.   
+위치권한은 동작에 필수 사항이므로, SDK관련한 동작 실행 전 사용자의 위치권한 허가가 반드시 필요합니다.   
+(초기화 전 위치권한이 획득되어야만 초기화가 정상적으로 이루어 집니다.)   
 제공되는 Class 및 API에 대한 설명은 [dart doc](https://dart.dev/tools/dart-doc)을 이용하여 생성하실 수 있습니다.
 
 다음은 TmapUISDK를 Fllutter에서 이용하기 위한 설명입니다.   
@@ -26,21 +28,6 @@ dependencies:
 ...
 </code></pre>
 <br></br>
-
-* OS별 plugin을 지원하기 위한 class를 설정합니다.
-	* Tmap UISDK는 method channel과 event channel을 지원합니다.
-<pre><code>
-flutter:
-	plugin:
-		platforms:
-			android:
-				package: com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
-				pluginClass: TmapUiSdkPlugin
-			ios:
-				pluginClass: TmapUiSdkPlugin
-</code></pre>
-<br></br>
-<hr/>
 
 # Android
 Android의 지원을 위해선 다음의 내용을 추가합니다.
@@ -147,6 +134,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 	* SDK내부에서 참조하는 3rdparty library를 정상적으로 Runtime에 link하기 위하여, BUILD_LIBRARY_FOR_DISTRIBUTION를 YES로 설정합니다.
     * 권한 확인을 위하여 사용하는 permission_handler의 위치권한을 활성화 하기 위한 macro를 설정합니다. (PERMISSION_LOCATION=1)
     * iOS의 target을 13.0으로 변경합니다.
+    * Simulator의 build 및 실행을 위하여 ONLY_ACTIVE_ARCH를 YES로 설정합니다. (현재 x86_64 simulator만 지원합니다.)
 <pre><code>
 post_install do |installer|
 	installer.pods_project.targets.each do |target|
@@ -171,6 +159,12 @@ post_install do |installer|
 			 end
 		end
 	end
+...
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+      end
+    end
 end
 </code></pre>
 <br></br>
