@@ -29,7 +29,7 @@ class AuthData {
   @JsonKey(name: 'client_ap_code')
   String clientApCode;
 
-  /// 인증에 필요한 사용자 key - 필수
+  /// 인증에 필요한 사용자 key
   @JsonKey(name: 'user_key')
   String userKey;
 
@@ -43,7 +43,7 @@ class AuthData {
       this.clientID = "",
       this.clientApiKey = "", //필수
       this.clientApCode = "",
-      this.userKey = "",      //필수
+      this.userKey = "",
       this.clientDeviceId = ""});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json

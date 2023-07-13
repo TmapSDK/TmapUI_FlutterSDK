@@ -1,3 +1,7 @@
+## 1.0.5
+* 인증 key관련 주석 변경 (userKey optional)
+* AOS/IOS sdk version 변경
+
 ## 1.0.4
 * readme 수정
 * example app의 위치 권한 획득관련 수정
