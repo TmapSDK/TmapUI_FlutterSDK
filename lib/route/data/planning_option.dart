@@ -10,9 +10,6 @@ enum PlanningOption {
   @JsonValue("Traffic_GeneralRoad")       generalRoad('Traffic_GeneralRoad'),
   @JsonValue("Traffic_Truck")             truck('Traffic_Truck'),
   @JsonValue("Traffic_AvoidSchoolZone")   avoidSchoolZone('Traffic_AvoidSchoolZone'),
-  @JsonValue("UsedFavoriteRoute")         usedFavoriteRoute('UsedFavoriteRoute'),
-  @JsonValue("SlowRoad")                  slowRoad('SlowRoad'),
-  @JsonValue("ThemeRoad")                 themeRoad('ThemeRoad'),
   ;
   final String text;
   const PlanningOption(this.text);

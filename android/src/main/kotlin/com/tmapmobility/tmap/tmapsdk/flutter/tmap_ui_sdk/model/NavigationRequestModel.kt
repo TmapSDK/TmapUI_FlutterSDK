@@ -2,6 +2,7 @@ package android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sd
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.skt.tmap.engine.navigation.route.RoutePlanType
 import com.skt.tmap.engine.navigation.route.data.MapPoint
 import com.skt.tmap.engine.navigation.route.data.WayPoint
 import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
@@ -13,6 +14,7 @@ data class NavigationRequestModel(
     var withoutPreview: Boolean,
     var routeRequestListener: TmapUISDK.RouteRequestListener?,
     var safeDriving: Boolean,
+    var routePlans: ArrayList<RoutePlanType>?,
 )
 
 data class RouteRequestData(
@@ -54,6 +56,10 @@ data class RouteRequestData(
             )
             val withoutPreview = data.guideWithoutPreview
             val routeRequestListener: TmapUISDK.RouteRequestListener? = null
+            val routePlans: ArrayList<RoutePlanType>? =
+                if (data.routeOptions == null) null else data.routeOptions?.map{
+                    RoutePlanType.valueOf(it)
+                }?.let { ArrayList(it) }
 
             return NavigationRequestModel(
                 departure,
@@ -62,6 +68,7 @@ data class RouteRequestData(
                 withoutPreview,
                 routeRequestListener,
                 data.safeDriving,
+                routePlans,
             )
         }
     }

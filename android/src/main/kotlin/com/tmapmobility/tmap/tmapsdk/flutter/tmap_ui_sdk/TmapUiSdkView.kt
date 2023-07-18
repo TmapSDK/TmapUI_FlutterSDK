@@ -223,7 +223,8 @@ class TmapUiSdkView(
                 // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
                 SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
               }
-            }
+            },
+            navigationRequestModel.routePlans
           )
         }
       }

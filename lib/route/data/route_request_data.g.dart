@@ -46,7 +46,4 @@ const _$PlanningOptionEnumMap = {
   PlanningOption.generalRoad: 'Traffic_GeneralRoad',
   PlanningOption.truck: 'Traffic_Truck',
   PlanningOption.avoidSchoolZone: 'Traffic_AvoidSchoolZone',
-  PlanningOption.usedFavoriteRoute: 'UsedFavoriteRoute',
-  PlanningOption.slowRoad: 'SlowRoad',
-  PlanningOption.themeRoad: 'ThemeRoad',
 };
