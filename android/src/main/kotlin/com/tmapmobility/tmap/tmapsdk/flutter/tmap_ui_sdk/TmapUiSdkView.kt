@@ -26,6 +26,7 @@ import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.*
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.drive_guide.TmapDriveGuideModel
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.utils.PreferenceUtils
+import android.widget.Toast
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
 import com.tmapmobility.tmap.tmapsdk.ui.data.MapSetting
 import com.tmapmobility.tmap.tmapsdk.ui.fragment.NavigationFragment
@@ -212,7 +213,16 @@ class TmapUiSdkView(
             navigationRequestModel.withoutPreview,
             object : TmapUISDK.RouteRequestListener {
               override fun onSuccess() {}
-              override fun onFail(errorCode: Int, errorMsg: String?) {}
+              override fun onFail(errorCode: Int, errorMsg: String?) {
+                val errorMessage = "error: $errorCode Msg:${errorMsg ?: "NA"}"
+                navigationFragment.activity?.let {
+                  it.runOnUiThread {
+                    Toast.makeText(it.applicationContext, errorMessage, Toast.LENGTH_SHORT).show()
+                  }
+                }
+                // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
+                SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
+              }
             }
           )
         }

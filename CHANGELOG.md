@@ -1,3 +1,6 @@
+## 1.0.6
+* 경로요청 API 동작 실패시 오류 수정
+
 ## 1.0.5
 * 인증 key관련 주석 변경 (userKey optional)
 * AOS/IOS sdk version 변경
