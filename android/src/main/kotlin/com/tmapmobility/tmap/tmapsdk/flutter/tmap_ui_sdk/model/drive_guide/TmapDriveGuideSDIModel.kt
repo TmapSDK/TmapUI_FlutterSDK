@@ -135,8 +135,26 @@ enum class SDIType(val value: Int){
     sdiExhaustGasGrade(64),
     @SerializedName("sdiTunnelChangeLanePos")
     sdiTunnelChangeLanePos(65),
+    @SerializedName("disabledStart")
+    disabledStart(66),
+    @SerializedName("disabledEnd")
+    disabledEnd(67),
+    @SerializedName("elderStart")
+    elderStart(68),
+    @SerializedName("elderEnd")
+    elderEnd(69),
+    @SerializedName("villagerStart")
+    villagerStart(70),
+    @SerializedName("villagerEnd")
+    villagerEnd(71),
+    @SerializedName("truckHeightLimit")
+    truckHeightLimit(72),
+    @SerializedName("truckWeightLimit")
+    truckWeightLimit(73),
+    @SerializedName("truckWideLimit")
+    truckWideLimit(74),
     @SerializedName("unknown")
-    unknown(66);
+    unknown(75);
 
     companion object {
         infix fun from(value: Int): SDIType =
@@ -155,4 +173,5 @@ data class TmapDriveGuideSDIModel(
     @SerializedName("sdi_block_time") var sdiBlockTime: Int = -1,
     @SerializedName("is_changable_speed_type") var isChangableSpeedType: Boolean = false,
     @SerializedName("is_limit_speed_sign_changed") var isLimitSpeedSignChanged: Boolean = false,
+    @SerializedName("truck_limit") var truckLimit: String? = null,
 )

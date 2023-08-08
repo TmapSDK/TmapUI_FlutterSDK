@@ -20,6 +20,7 @@ TmapDriveGuideSDI _$TmapDriveGuideSDIFromJson(Map<String, dynamic> json) =>
       isChangableSpeedType: json['is_changable_speed_type'] as bool? ?? false,
       isLimitSpeedSignChanged:
           json['is_limit_speed_sign_changed'] as bool? ?? false,
+      truckLimit: json['truck_limit'] as String? ?? "",
     );
 
 Map<String, dynamic> _$TmapDriveGuideSDIToJson(TmapDriveGuideSDI instance) =>
@@ -34,6 +35,7 @@ Map<String, dynamic> _$TmapDriveGuideSDIToJson(TmapDriveGuideSDI instance) =>
       'sdi_block_time': instance.sdiBlockTime,
       'is_changable_speed_type': instance.isChangableSpeedType,
       'is_limit_speed_sign_changed': instance.isLimitSpeedSignChanged,
+      'truck_limit': instance.truckLimit,
     };
 
 const _$SDITypeEnumMap = {
@@ -103,5 +105,14 @@ const _$SDITypeEnumMap = {
   SDIType.restPlace: 'restPlace',
   SDIType.sdiExhaustGasGrade: 'sdiExhaustGasGrade',
   SDIType.sdiTunnelChangeLanePos: 'sdiTunnelChangeLanePos',
+  SDIType.disabledStart: 'disabledStart',
+  SDIType.disabledEnd: 'disabledEnd',
+  SDIType.elderStart: 'elderStart',
+  SDIType.elderEnd: 'elderEnd',
+  SDIType.villagerStart: 'villagerStart',
+  SDIType.villagerEnd: 'villagerEnd',
+  SDIType.truckHeightLimit: 'truckHeightLimit',
+  SDIType.truckWeightLimit: 'truckWeightLimit',
+  SDIType.truckWideLimit: 'truckWideLimit',
   SDIType.unknown: 'unknown',
 };

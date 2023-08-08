@@ -94,6 +94,7 @@ data class TmapDriveGuideModel(
                     firstSDIInfo?.get("nSdiBlockTime") as? Int ?: 0,
                     firstSDIInfo?.get("bIsChangeableSpeedType") as? Boolean ?: false,
                     firstSDIInfo?.get("bIsLimitSpeedSignChanged") as? Boolean ?: false,
+                    firstSDIInfo?.get("nTruckLimit") as? String ?: "",
                 ),
                 bundle.getBoolean("hasTbtInfo"),
                 TmapDriveGuideTBTModel(

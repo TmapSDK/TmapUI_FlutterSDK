@@ -64,7 +64,8 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         val clientID = json?.getString("client_id") ?: ""
         val clientApiKey = json?.getString("client_api_key") ?: ""
         val userKey = json?.getString("user_key") ?: ""
-        initializeSDK(clientID, clientApiKey, userKey, result)
+        val deviceKey = json?.getString("device_key") ?: ""
+        initializeSDK(clientID, clientApiKey, userKey, deviceKey, result)
       }
       "configSDK" -> {
         val carOption: CarOption? =
@@ -97,8 +98,8 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     }
   }
 
-  private fun initializeSDK(clientID: String, clientApiKey: String, userKey: String, result: Result) {
-    TmapUISDK.initialize(activity, clientID, clientApiKey, userKey,
+  private fun initializeSDK(clientID: String, clientApiKey: String, userKey: String, deviceKey: String, result: Result) {
+    TmapUISDK.initialize(activity, clientID, clientApiKey, userKey, deviceKey,
       object : TmapUISDK.InitializeListener {
         override fun onSuccess() {
           result.success("granted")

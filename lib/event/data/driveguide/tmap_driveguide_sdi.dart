@@ -72,6 +72,15 @@ enum SDIType {
   @JsonValue("restPlace") restPlace('restPlace'),
   @JsonValue("sdiExhaustGasGrade") sdiExhaustGasGrade('sdiExhaustGasGrade'),
   @JsonValue("sdiTunnelChangeLanePos") sdiTunnelChangeLanePos('sdiTunnelChangeLanePos'),
+  @JsonValue("disabledStart") disabledStart('disabledStart'),
+  @JsonValue("disabledEnd") disabledEnd('disabledEnd'),
+  @JsonValue("elderStart") elderStart('elderStart'),
+  @JsonValue("elderEnd") elderEnd('elderEnd'),
+  @JsonValue("villagerStart") villagerStart('villagerStart'),
+  @JsonValue("villagerEnd") villagerEnd('villagerEnd'),
+  @JsonValue("truckHeightLimit") truckHeightLimit('truckHeightLimit'),
+  @JsonValue("truckWeightLimit") truckWeightLimit('truckWeightLimit'),
+  @JsonValue("truckWideLimit") truckWideLimit('truckWideLimit'),
   @JsonValue("unknown") unknown('unknown'),
   ;
   final String text;
@@ -117,6 +126,9 @@ class TmapDriveGuideSDI {
   /// 구간시작점 및 구간종점 300m 지점에서 과속표지판 변경여부를 타나냅니다.
   @JsonKey(name: 'is_limit_speed_sign_changed')
   bool isLimitSpeedSignChanged = false;
+  /// 트럭관련 제약사항을 나타냅니다.
+  @JsonKey(name: 'truck_limit')
+  String? truckLimit = null;
 
   TmapDriveGuideSDI({this.sdiType = SDIType.unknown,
     this.sdiDistance = -1,
@@ -127,7 +139,8 @@ class TmapDriveGuideSDI {
     this.sdiBlockAverageSpeed = -1,
     this.sdiBlockTime = -1,
     this.isChangableSpeedType = false,
-    this.isLimitSpeedSignChanged = false});
+    this.isLimitSpeedSignChanged = false,
+    this.truckLimit = null});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory TmapDriveGuideSDI.fromJson(Map<String, dynamic> json) => _$TmapDriveGuideSDIFromJson(json);

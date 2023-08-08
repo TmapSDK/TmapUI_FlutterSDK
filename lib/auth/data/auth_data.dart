@@ -33,6 +33,10 @@ class AuthData {
   @JsonKey(name: 'user_key')
   String userKey;
 
+  /// 인증에 필요한 Device key
+  @JsonKey(name: 'device_key')
+  String deviceKey;
+
   /// 사용자를 식별하기 위한 ID
   /// 빈문자열 또는 Null을 입력하게 되면 SDK내부적으로 uuid형태를 생성하여 이용하게 됨.
   @JsonKey(name: 'client_device_id')
@@ -44,6 +48,7 @@ class AuthData {
       this.clientApiKey = "", //필수
       this.clientApCode = "",
       this.userKey = "",
+      this.deviceKey = "",
       this.clientDeviceId = ""});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json

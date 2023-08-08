@@ -34,7 +34,142 @@ import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
 import io.flutter.embedding.engine.mutatorsstack.FlutterMutatorView
 import io.flutter.plugin.platform.PlatformView
 import org.json.JSONObject
+import java.lang.ref.WeakReference
 import java.util.*
+
+class FlutterDrivingStatusCallback(activity: FragmentActivity?): TmapUISDK.DrivingStatusCallback {
+  private val _activity: WeakReference<FragmentActivity>?
+
+  init {
+    _activity = WeakReference(activity)
+  }
+
+  // 주의. EventChannel.StreamHandler를 이용하여 데이터를 전달하는 경우 uithread에서 해당 내용을 실행하지 않으면 java.lang.RuntimeException이 발생함.
+  override fun onStartNavigation() {
+    _activity?.get()?.runOnUiThread {
+      SDKStatusStreamer.success(TmapSDKStatusModel.MAP_INITIALIZING)
+    }
+  }
+
+  override fun onStopNavigation() {
+    _activity?.get()?.runOnUiThread {
+      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
+    }
+  }
+
+  override fun onPermissionDenied(errorCode: Int, errorMsg: String?) {
+    _activity?.get()?.runOnUiThread {
+      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_N_REQUEST_PERMISSION)
+    }
+  }
+
+  override fun onArrivedDestination(destination: String, drivingTime: Int, drivingDistance: Int) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnArrivedDestination)
+    }
+  }
+
+  override fun onBreakawayFromRouteEvent() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnBreakawayFromRouteEvent)
+    }
+  }
+
+  override fun onApproachingAlternativeRoute() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnApproachingAlternativeRoute)
+    }
+  }
+
+  override fun onPassedAlternativeRouteJunction() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedAlternativeRouteJunction)
+    }
+  }
+
+  override fun onPeriodicReroute() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnPeriodicReroute)
+    }
+  }
+
+  override fun onRouteChanged(index: Int) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnRouteChanged)
+    }
+  }
+
+  override fun onForceReroute(periodicType: NddsDataType.DestSearchFlag) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnForceReroute)
+    }
+  }
+
+  override fun onNoLocationSignal(noLocationSignal: Boolean) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnNoLocationSignal)
+    }
+  }
+
+  override fun onApproachingViaPoint() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnApproachingViaPoint)
+    }
+  }
+
+  override fun onPassedViaPoint() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedViaPoint)
+    }
+  }
+
+  override fun onChangeRouteOptionComplete(routePlanType: RoutePlanType) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnChangeRouteOptionComplete)
+    }
+  }
+
+  override fun onBreakAwayRequestComplete() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnBreakAwayRequestComplete)
+    }
+  }
+
+  override fun onPeriodicRerouteComplete() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnPeriodicRerouteComplete)
+    }
+  }
+
+  override fun onUserRerouteComplete() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnUserRerouteComplete)
+    }
+  }
+
+  override fun onDestinationDirResearchComplete() {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnDestinationDirResearchComplete)
+    }
+  }
+
+  override fun onDoNotRerouteToDestinationComplete() {}
+
+  override fun onFailRouteRequest(errorCode: String, errorMessage: String) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnFailRouteRequest)
+    }
+  }
+
+  override fun onPassedTollgate(fee: Int) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedTollgate)
+    }
+  }
+
+  override fun onLocationChanged() {}
+
+}
 
 class TmapUiSdkView(
   context: Context,
@@ -46,92 +181,7 @@ class TmapUiSdkView(
   private val viewId: Int
   private val navigationRequestModel: NavigationRequestModel?
 
-  private val driveStatusChangedListener = object : TmapUISDK.DrivingStatusCallback {
-    override fun onStartNavigation() {
-      SDKStatusStreamer.success(TmapSDKStatusModel.MAP_INITIALIZING)
-    }
-
-    override fun onStopNavigation() {
-      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
-    }
-
-    override fun onPermissionDenied(errorCode: Int, errorMsg: String?) {
-      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_N_REQUEST_PERMISSION)
-    }
-
-    override fun onArrivedDestination(destination: String, drivingTime: Int, drivingDistance: Int) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnArrivedDestination)
-    }
-
-    override fun onBreakawayFromRouteEvent() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnBreakawayFromRouteEvent)
-    }
-
-    override fun onApproachingAlternativeRoute() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnApproachingAlternativeRoute)
-    }
-
-    override fun onPassedAlternativeRouteJunction() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedAlternativeRouteJunction)
-    }
-
-    override fun onPeriodicReroute() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnPeriodicReroute)
-    }
-
-    override fun onRouteChanged(index: Int) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnRouteChanged)
-    }
-
-    override fun onForceReroute(periodicType: NddsDataType.DestSearchFlag) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnForceReroute)
-    }
-
-    override fun onNoLocationSignal(noLocationSignal: Boolean) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnNoLocationSignal)
-    }
-
-    override fun onApproachingViaPoint() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnApproachingViaPoint)
-    }
-
-    override fun onPassedViaPoint() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedViaPoint)
-    }
-
-    override fun onChangeRouteOptionComplete(routePlanType: RoutePlanType) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnChangeRouteOptionComplete)
-    }
-
-    override fun onBreakAwayRequestComplete() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnBreakAwayRequestComplete)
-    }
-
-    override fun onPeriodicRerouteComplete() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnPeriodicRerouteComplete)
-    }
-
-    override fun onUserRerouteComplete() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnUserRerouteComplete)
-    }
-
-    override fun onDestinationDirResearchComplete() {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnDestinationDirResearchComplete)
-    }
-
-    override fun onDoNotRerouteToDestinationComplete() {}
-
-    override fun onFailRouteRequest(errorCode: String, errorMessage: String) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnFailRouteRequest)
-    }
-
-    override fun onPassedTollgate(fee: Int) {
-      DriveStatusStreamer.success(TmapDriveStatusModel.OnPassedTollgate)
-    }
-
-    override fun onLocationChanged() {}
-  }
-
+  private var driveStatusChangedListener : FlutterDrivingStatusCallback? = null
   init {
     _context = context
     viewId = View.generateViewId()
@@ -161,7 +211,10 @@ class TmapUiSdkView(
       vParams
     )
     navigationFragment = TmapUISDK.getFragment()
-    navigationFragment.drivingStatusCallback = driveStatusChangedListener
+    activity?.let {
+      driveStatusChangedListener = FlutterDrivingStatusCallback(activity)
+      navigationFragment.drivingStatusCallback = driveStatusChangedListener
+    }
     subscribeEDCData()
     val carOption: CarOption? = PreferenceUtils.carOption
     if (carOption != null) {
