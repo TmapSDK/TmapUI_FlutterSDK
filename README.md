@@ -30,6 +30,13 @@ dependencies:
 <br></br>
 
 # Android
+* play-services-location version관련
+	* TmapUISDK는 play-services-location 17.0.0을 이용하여 작성되었습니다.
+	* play-services-location의 경우 21.0.0부터 일부 API가 depricate되어 21.0.0이상을 이용하는 상황에서는 정상동작하지 않을 수 있습니다.
+	* 해당 API에 대한 하위호환과 안정성을 위해 검토중에 있으며, 조속히 검토된 버전을 release하도록 하겠습니다.
+	* play-services-location 21.0.0에 대한 변경사항은 [release note](https://developers.google.com/android/guides/releases?hl=ko#october_13_2022)에서 확인 가능하십니다.
+
+
 Android의 지원을 위해선 다음의 내용을 추가합니다.
 
 *  plugin의 참조를 위한 maven 추가

@@ -1,3 +1,6 @@
+## 1.0.11
+* (AOS) play-services-location version conflict로 인한 crash수정
+
 ## 1.0.10
 * pause/resume시 자차 marker 출력 이상오류 수정
 
