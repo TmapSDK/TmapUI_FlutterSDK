@@ -1,3 +1,6 @@
+## 1.0.12
+* (AOS) 경로선 색 지정 관련 버그 수정
+
 ## 1.0.11
 * (AOS) play-services-location version conflict로 인한 crash수정
 
