@@ -90,6 +90,12 @@ class TmapDriveGuide {
   /// 남은 경유지들의 정보
   @JsonKey(name: 'remain_via_point')
   List<TmapDriveGuideRemainViaPoint>? remainViaPoint;
+  /// 현재의 위치정보 (위도)
+  @JsonKey(name: 'matched_latitude')
+  double matchedLatitude;
+  /// 현재의 위치정보 (경도)
+  @JsonKey(name: 'matched_longitude')
+  double matchedLongitude;
 
   TmapDriveGuide({this.speedInKmPerHour = 0,
     this.isShadeArea = false,
@@ -110,6 +116,8 @@ class TmapDriveGuide {
     this.remainDistanceToGoPositionInMeter = 0,
     this.remainTimeToGoPositionInSec = 0,
     this.remainViaPoint,
+    this.matchedLatitude = 0,
+    this.matchedLongitude = 0,
   });
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json

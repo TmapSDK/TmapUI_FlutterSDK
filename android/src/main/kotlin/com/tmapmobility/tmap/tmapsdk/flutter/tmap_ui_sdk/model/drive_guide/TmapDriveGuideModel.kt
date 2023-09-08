@@ -43,6 +43,8 @@ data class TmapDriveGuideModel(
     @SerializedName("remain_distance_to_go_position_in_meter") var remainDistanceToGoPositionInMeter: Int = 0,
     @SerializedName("remain_time_to_go_position_in_sec") var remainTimeToGoPositionInSec: Int = 0,
     @SerializedName("remain_via_point") var remainViaPoint: ArrayList<TmapDriveGuideRemainViaPointModel>? = null,
+    @SerializedName("matched_latitude") var matchedLatitude: Double? = null,
+    @SerializedName("matched_longitude") var matchedLongitude: Double? = null,
 ) {
     companion object {
         fun create(bundle: Bundle): TmapDriveGuideModel {
@@ -51,6 +53,8 @@ data class TmapDriveGuideModel(
             val remainViaPointSize = bundle.getInt("remainViaPointSize")
             val remainViaPointMap = bundle.serializable<HashMap<String, Any>>("remainViaPoint")
             val remainViaPoint = ArrayList<TmapDriveGuideRemainViaPointModel>()
+            var matchedLatitude = bundle.getDouble("matchedLatitude")
+            var matchedLongitude = bundle.getDouble("matchedLongitude")
             remainViaPointMap?.let {
                 for(i in 0..remainViaPointSize) {
                     val map = it[i.toString()] as HashMap<*, *>
@@ -115,6 +119,8 @@ data class TmapDriveGuideModel(
                 0,
                 0,
                 remainViaPoint,
+                matchedLatitude,
+                matchedLongitude
             )
         }
     }

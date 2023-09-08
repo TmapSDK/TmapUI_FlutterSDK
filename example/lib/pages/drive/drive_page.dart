@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tmap_ui_sdk/event/data/driveStatus/tmap_drivestatus.dart';
+import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide.dart';
 import 'package:tmap_ui_sdk/event/data/markerStatus/marker_status.dart';
 import 'package:tmap_ui_sdk/event/data/sdkStatus/tmap_sdk_status.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_manager.dart';
@@ -21,6 +23,18 @@ class _DrivePageState extends State<DrivePage> {
     super.initState();
     TmapUISDKManager().startTmapSDKStatusStream(_onEvent);
     TmapUISDKManager().startMarkerStatusStream(_onMarkerEvent);
+    TmapUISDKManager().startTmapDriveStatusStream(_onDriveStatus);
+    TmapUISDKManager().startTmapDriveGuideStream(_onDriveGuide);
+  }
+
+  void _onDriveStatus(TmapDriveStatus status) {
+    if (status == TmapDriveStatus.onArrivedDestination) {
+      debugPrint('[onDriveStatus] - onArrived');
+    }
+  }
+
+  void _onDriveGuide(TmapDriveGuide guide) {
+    debugPrint('[onDriveGuide] - matched Location(${guide.matchedLatitude},${guide.matchedLongitude})');
   }
 
   void _onEvent(TmapSDKStatus sdkStatus) {

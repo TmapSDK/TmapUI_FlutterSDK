@@ -44,6 +44,8 @@ TmapDriveGuide _$TmapDriveGuideFromJson(Map<String, dynamic> json) =>
           ?.map((e) =>
               TmapDriveGuideRemainViaPoint.fromJson(e as Map<String, dynamic>))
           .toList(),
+      matchedLatitude: json['matched_latitude'] as double? ?? 0,
+      matchedLongitude: json['matched_longitude'] as double? ?? 0,
     );
 
 Map<String, dynamic> _$TmapDriveGuideToJson(TmapDriveGuide instance) =>
@@ -70,6 +72,8 @@ Map<String, dynamic> _$TmapDriveGuideToJson(TmapDriveGuide instance) =>
           instance.remainDistanceToGoPositionInMeter,
       'remain_time_to_go_position_in_sec': instance.remainTimeToGoPositionInSec,
       'remain_via_point': instance.remainViaPoint,
+      'matched_latitude': instance.matchedLatitude,
+      'matched_longitude': instance.matchedLongitude,
     };
 
 const _$GpsStatusEnumMap = {

@@ -65,7 +65,7 @@ class _RootPageState extends State<RootPage> {
           clientApiKey: [발급받은 api key],
           clientApCode: "",
           userKey: [발급받은 user key 또는 빈문자열],
-          deviceKey: "",
+          deviceKey: [발급받은 device key 또는 빈문자열],
           clientDeviceId: ""
       );
       InitResult result = await manager.initSDK(authInfo) ?? InitResult.notGranted;
