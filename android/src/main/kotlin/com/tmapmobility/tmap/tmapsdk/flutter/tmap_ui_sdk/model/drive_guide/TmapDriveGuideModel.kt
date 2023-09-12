@@ -55,16 +55,18 @@ data class TmapDriveGuideModel(
             val remainViaPoint = ArrayList<TmapDriveGuideRemainViaPointModel>()
             var matchedLatitude = bundle.getDouble("matchedLatitude")
             var matchedLongitude = bundle.getDouble("matchedLongitude")
-            remainViaPointMap?.let {
-                for(i in 0..remainViaPointSize) {
-                    val map = it[i.toString()] as HashMap<*, *>
-                    remainViaPoint.add(
-                        TmapDriveGuideRemainViaPointModel(
-                            map["viaIdx"] as? Int ?: 0,
-                            map["remainDist"] as? Int ?: 0,
-                            map["remainTime"] as? Int ?: 0,
+            remainViaPointMap?.let { remainViaPointMap ->
+                for(i in 0 until remainViaPointSize) {
+                    remainViaPointMap.getOrDefault(i.toString(),null)?.let {
+                        val map = it as HashMap<*, *>
+                        remainViaPoint.add(
+                            TmapDriveGuideRemainViaPointModel(
+                                map["viaIdx"] as? Int ?: 0,
+                                map["remainDist"] as? Int ?: 0,
+                                map["remainTime"] as? Int ?: 0,
+                            )
                         )
-                    )
+                    }
                 }
             }
 
