@@ -35,6 +35,9 @@ class _DrivePageState extends State<DrivePage> {
 
   void _onDriveGuide(TmapDriveGuide guide) {
     debugPrint('[onDriveGuide] - matched Location(${guide.matchedLatitude},${guide.matchedLongitude})');
+    debugPrint('[onDriveGuide] - secondSDIInfo: ${guide.secondSDIInfo?.toJsonString()}');
+    debugPrint('[onDriveGuide] - secondTBTInfo: ${guide.secondTBTInfo?.toJsonString()}');
+    debugPrint('[onDriveGuide] - remainViaPointSize: ${guide.remainViaPointSize}');
   }
 
   void _onEvent(TmapSDKStatus sdkStatus) {

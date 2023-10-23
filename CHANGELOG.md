@@ -1,3 +1,10 @@
+## 1.0.16
+* 후면단속 카메라 지원
+* DriveStatus에 secondSDI, secondTBT, remainViaPointSize 정보 추가
+
+## 1.0.15
+* Navigation관련 데이터 type 수정
+
 ## 1.0.14
 * 경유지가 설정된 경우 DriveGuide 데이터 전달 관련 버그 수정
 

@@ -27,15 +27,25 @@ TmapDriveGuide _$TmapDriveGuideFromJson(Map<String, dynamic> json) =>
           ? null
           : TmapDriveGuideSDI.fromJson(
               json['first_sdi_info'] as Map<String, dynamic>),
+      secondSDIInfo: json['second_sdi_info'] == null
+          ? null
+          : TmapDriveGuideSDI.fromJson(
+          json['second_sdi_info'] as Map<String, dynamic>),
       hasTbtInfo: json['has_tbt_info'] as bool? ?? false,
       firstTBTInfo: json['first_tbt_info'] == null
           ? null
           : TmapDriveGuideTBT.fromJson(
               json['first_tbt_info'] as Map<String, dynamic>),
+      secondTBTInfo: json['second_tbt_info'] == null
+          ? null
+          : TmapDriveGuideTBT.fromJson(
+          json['second_tbt_info'] as Map<String, dynamic>),
       remainDistanceToDestinationInMeter:
           json['remain_distance_to_destination_in_meter'] as int? ?? 0,
       remainTimeToDestinationInSec:
           json['remain_time_to_destination_in_sec'] as int? ?? 0,
+      remainViaPointSize:
+          json['remain_via_point_size'] as int? ?? 0,
       remainDistanceToGoPositionInMeter:
           json['remain_distance_to_go_position_in_meter'] as int? ?? 0,
       remainTimeToGoPositionInSec:
@@ -62,12 +72,16 @@ Map<String, dynamic> _$TmapDriveGuideToJson(TmapDriveGuide instance) =>
       'average_speed': instance.averageSpeed,
       'limit_speed': instance.limitSpeed,
       'first_sdi_info': instance.firstSDIInfo,
+      'second_sdi_info': instance.secondSDIInfo,
       'has_tbt_info': instance.hasTbtInfo,
       'first_tbt_info': instance.firstTBTInfo,
+      'second_tbt_info': instance.secondTBTInfo,
       'remain_distance_to_destination_in_meter':
           instance.remainDistanceToDestinationInMeter,
       'remain_time_to_destination_in_sec':
           instance.remainTimeToDestinationInSec,
+      'remain_via_point_size':
+          instance.remainViaPointSize,
       'remain_distance_to_go_position_in_meter':
           instance.remainDistanceToGoPositionInMeter,
       'remain_time_to_go_position_in_sec': instance.remainTimeToGoPositionInSec,

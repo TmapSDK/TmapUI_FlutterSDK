@@ -63,16 +63,22 @@ class TmapDriveGuide {
   /// 제한속도를 나타냅니다.
   @JsonKey(name: 'limit_speed')
   int limitSpeed = 0;
-  /// SDI의 정보를 나타냅니다.
+  /// 첫번째 SDI의 정보를 나타냅니다.
   @JsonKey(name: 'first_sdi_info')
   TmapDriveGuideSDI? firstSDIInfo;
+  /// 두번째 SDI의 정보를 나타냅니다.
+  @JsonKey(name: 'second_sdi_info')
+  TmapDriveGuideSDI? secondSDIInfo;
 
   /// TBT의 정보 존재여부를 나타냅니다.
   @JsonKey(name: 'has_tbt_info')
   bool hasTbtInfo = false;
-  /// TBT의 정보를 나타냅니다.
+  /// 첫번째 TBT의 정보를 나타냅니다.
   @JsonKey(name: 'first_tbt_info')
   TmapDriveGuideTBT? firstTBTInfo;
+  /// 두번째 TBT의 정보를 나타냅니다.
+  @JsonKey(name: 'second_tbt_info')
+  TmapDriveGuideTBT? secondTBTInfo;
 
   /// 목적지까지의 남은 거리를 나타냅니다. (meter)
   @JsonKey(name: 'remain_distance_to_destination_in_meter')
@@ -80,6 +86,9 @@ class TmapDriveGuide {
   /// 목적지까지의 남은 시간을 나타냅니다. (초)
   @JsonKey(name: 'remain_time_to_destination_in_sec')
   int remainTimeToDestinationInSec = 0;
+  /// 전체 경유지 정보 갯수를 나타냅니다.
+  @JsonKey(name: 'remain_via_point_size')
+  int remainViaPointSize = 0;
 
   /// 다음 경유지까지의 남은 거리를 나타냅니다. (meter)
   @JsonKey(name: 'remain_distance_to_go_position_in_meter')
@@ -109,10 +118,13 @@ class TmapDriveGuide {
     this.averageSpeed = 0,
     this.limitSpeed = 0,
     this.firstSDIInfo,
+    this.secondSDIInfo,
     this.hasTbtInfo = false,
     this.firstTBTInfo,
+    this.secondTBTInfo,
     this.remainDistanceToDestinationInMeter = 0,
     this.remainTimeToDestinationInSec = 0,
+    this.remainViaPointSize = 0,
     this.remainDistanceToGoPositionInMeter = 0,
     this.remainTimeToGoPositionInSec = 0,
     this.remainViaPoint,

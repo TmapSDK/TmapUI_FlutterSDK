@@ -36,10 +36,13 @@ data class TmapDriveGuideModel(
     @SerializedName("average_speed") var averageSpeed: Int = 0,
     @SerializedName("limit_speed") var limitSpeed: Int = 0,
     @SerializedName("first_sdi_info") var firstSDIInfo: TmapDriveGuideSDIModel? = null,
+    @SerializedName("second_sdi_info") var secondSDIInfo: TmapDriveGuideSDIModel? = null,
     @SerializedName("has_tbt_info") var hasTbtInfo: Boolean = false,
     @SerializedName("first_tbt_info") var firstTBTInfo: TmapDriveGuideTBTModel? = null,
+    @SerializedName("second_tbt_info") var secondTBTInfo: TmapDriveGuideTBTModel? = null,
     @SerializedName("remain_distance_to_destination_in_meter") var remainDistanceToDestinationInMeter: Int = 0,
     @SerializedName("remain_time_to_destination_in_sec") var remainTimeToDestinationInSec: Int = 0,
+    @SerializedName("remain_via_point_size") var remainViaPointSize: Int = 0,
     @SerializedName("remain_distance_to_go_position_in_meter") var remainDistanceToGoPositionInMeter: Int = 0,
     @SerializedName("remain_time_to_go_position_in_sec") var remainTimeToGoPositionInSec: Int = 0,
     @SerializedName("remain_via_point") var remainViaPoint: ArrayList<TmapDriveGuideRemainViaPointModel>? = null,
@@ -49,7 +52,9 @@ data class TmapDriveGuideModel(
     companion object {
         fun create(bundle: Bundle): TmapDriveGuideModel {
             val firstSDIInfo = bundle.serializable<HashMap<String, Any>>("firstSDIInfo")
+            val secondSDIInfo = bundle.serializable<HashMap<String, Any>>("secondSDIInfo")
             val firstTBTInfo = bundle.serializable<HashMap<String, Any>>("firstTBTInfo")
+            val secondTBTInfo = bundle.serializable<HashMap<String, Any>>("secondTBTInfo")
             val remainViaPointSize = bundle.getInt("remainViaPointSize")
             val remainViaPointMap = bundle.serializable<HashMap<String, Any>>("remainViaPoint")
             val remainViaPoint = ArrayList<TmapDriveGuideRemainViaPointModel>()
@@ -70,6 +75,66 @@ data class TmapDriveGuideModel(
                 }
             }
 
+            val firstSDIInfoModel = if (firstSDIInfo == null) null
+            else TmapDriveGuideSDIModel(
+                SDIType.from(firstSDIInfo?.get("nSdiType") as? Int ?: -1),
+                firstSDIInfo?.get("nSdiDist") as? Int ?: 0,
+                firstSDIInfo?.get("nSdiSpeedLimit") as? Int ?: 0,
+                firstSDIInfo?.get("bSdiBlockSection") as? Boolean ?: false,
+                firstSDIInfo?.get("nSdiBlockDist") as? Int ?: 0,
+                firstSDIInfo?.get("nSdiBlockSpeed") as? Int ?: 0,
+                firstSDIInfo?.get("nSdiBlockAverageSpeed") as? Int ?: 0,
+                firstSDIInfo?.get("nSdiBlockTime") as? Int ?: 0,
+                firstSDIInfo?.get("bIsChangeableSpeedType") as? Boolean ?: false,
+                firstSDIInfo?.get("bIsLimitSpeedSignChanged") as? Boolean ?: false,
+                firstSDIInfo?.get("nTruckLimit") as? String ?: "",
+            )
+
+            val secondSDIInfoModel = if (secondSDIInfo == null) null
+            else TmapDriveGuideSDIModel(
+                SDIType.from(secondSDIInfo?.get("nSdiType") as? Int ?: -1),
+                secondSDIInfo?.get("nSdiDist") as? Int ?: 0,
+                secondSDIInfo?.get("nSdiSpeedLimit") as? Int ?: 0,
+                secondSDIInfo?.get("bSdiBlockSection") as? Boolean ?: false,
+                secondSDIInfo?.get("nSdiBlockDist") as? Int ?: 0,
+                secondSDIInfo?.get("nSdiBlockSpeed") as? Int ?: 0,
+                secondSDIInfo?.get("nSdiBlockAverageSpeed") as? Int ?: 0,
+                secondSDIInfo?.get("nSdiBlockTime") as? Int ?: 0,
+                secondSDIInfo?.get("bIsChangeableSpeedType") as? Boolean ?: false,
+                secondSDIInfo?.get("bIsLimitSpeedSignChanged") as? Boolean ?: false,
+                secondSDIInfo?.get("nTruckLimit") as? String ?: "",
+            )
+
+            val firstTBTInfoModel = if (firstTBTInfo == null) null
+            else TmapDriveGuideTBTModel(
+                firstTBTInfo?.get("nTBTDist") as? Int ?: 0,
+                firstTBTInfo?.get("nTBTTime") as? Int ?: 0,
+                TBTTurnType.from(firstTBTInfo?.get("nTBTTurnType") as? Int ?: 0),
+                firstTBTInfo?.get("nTollFee") as? Int ?: 0,
+                firstTBTInfo?.get("szRoadName") as? String ?: "",
+                firstTBTInfo?.get("szCrossName") as? String ?: "",
+                firstTBTInfo?.get("szNearDirName") as? String ?: "",
+                firstTBTInfo?.get("szMidDirName") as? String ?: "",
+                firstTBTInfo?.get("szFarDirName") as? String ?: "",
+                firstTBTInfo?.get("szTBTMainText") as? String ?: "",
+                ComplexIntersectionVoiceType.from(firstTBTInfo?.get("nExtcVoiceCode") as? Int ?: 0),
+            )
+
+            val secondTBTInfoModel = if (secondTBTInfo == null) null
+            else TmapDriveGuideTBTModel(
+                secondTBTInfo?.get("nTBTDist") as? Int ?: 0,
+                secondTBTInfo?.get("nTBTTime") as? Int ?: 0,
+                TBTTurnType.from(secondTBTInfo?.get("nTBTTurnType") as? Int ?: 0),
+                secondTBTInfo?.get("nTollFee") as? Int ?: 0,
+                secondTBTInfo?.get("szRoadName") as? String ?: "",
+                secondTBTInfo?.get("szCrossName") as? String ?: "",
+                secondTBTInfo?.get("szNearDirName") as? String ?: "",
+                secondTBTInfo?.get("szMidDirName") as? String ?: "",
+                secondTBTInfo?.get("szFarDirName") as? String ?: "",
+                secondTBTInfo?.get("szTBTMainText") as? String ?: "",
+                ComplexIntersectionVoiceType.from(secondTBTInfo?.get("nExtcVoiceCode") as? Int ?: 0),
+            )
+
             return TmapDriveGuideModel(
                 bundle.getInt("speedInKmPerHour"),
                 bundle.getBoolean("isShadeArea"),
@@ -89,37 +154,16 @@ data class TmapDriveGuideModel(
                 bundle.getBoolean("isCaution"),
                 bundle.getInt("averageSpeed"),
                 bundle.getInt("limitSpeed"),
-                TmapDriveGuideSDIModel(
-                    SDIType.from(firstSDIInfo?.get("nSdiType") as? Int ?: -1),
-                    firstSDIInfo?.get("nSdiDist") as? Int ?: 0,
-                    firstSDIInfo?.get("nSdiSpeedLimit") as? Int ?: 0,
-                    firstSDIInfo?.get("bSdiBlockSection") as? Boolean ?: false,
-                    firstSDIInfo?.get("nSdiBlockDist") as? Int ?: 0,
-                    firstSDIInfo?.get("nSdiBlockSpeed") as? Int ?: 0,
-                    firstSDIInfo?.get("nSdiBlockAverageSpeed") as? Int ?: 0,
-                    firstSDIInfo?.get("nSdiBlockTime") as? Int ?: 0,
-                    firstSDIInfo?.get("bIsChangeableSpeedType") as? Boolean ?: false,
-                    firstSDIInfo?.get("bIsLimitSpeedSignChanged") as? Boolean ?: false,
-                    firstSDIInfo?.get("nTruckLimit") as? String ?: "",
-                ),
+                firstSDIInfoModel,
+                secondSDIInfoModel,
                 bundle.getBoolean("hasTbtInfo"),
-                TmapDriveGuideTBTModel(
-                    firstTBTInfo?.get("nTBTDist") as? Int ?: 0,
-                    firstTBTInfo?.get("nTBTTime") as? Int ?: 0,
-                    TBTTurnType.from(firstTBTInfo?.get("nTBTTurnType") as? Int ?: 0),
-                    firstTBTInfo?.get("nTollFee") as? Int ?: 0,
-                    firstTBTInfo?.get("szRoadName") as? String ?: "",
-                    firstTBTInfo?.get("szCrossName") as? String ?: "",
-                    firstTBTInfo?.get("szNearDirName") as? String ?: "",
-                    firstTBTInfo?.get("szMidDirName") as? String ?: "",
-                    firstTBTInfo?.get("szFarDirName") as? String ?: "",
-                    firstTBTInfo?.get("szTBTMainText") as? String ?: "",
-                    ComplexIntersectionVoiceType.from(firstTBTInfo?.get("nExtcVoiceCode") as? Int ?: 0),
-                ),
+                firstTBTInfoModel,
+                secondTBTInfoModel,
                 bundle.getInt("remainDistanceToDestinationInMeter"),
                 bundle.getInt("remainTimeToDestinationInSec"),
-                0,
-                0,
+                bundle.getInt("remainViaPointSize"),
+                bundle.getInt("remainDistanceToGoPositionInMeter"),
+                bundle.getInt("remainTimeToGoPositionInSec"),
                 remainViaPoint,
                 matchedLatitude,
                 matchedLongitude
