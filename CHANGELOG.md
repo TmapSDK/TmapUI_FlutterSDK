@@ -1,3 +1,6 @@
+## 1.0.17
+* 배경음악 play중 TTS play시 배경음악 stop되는 문제 수정 (AOS)
+
 ## 1.0.16
 * 후면단속 카메라 지원
 * DriveStatus에 secondSDI, secondTBT, remainViaPointSize 정보 추가
