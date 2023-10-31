@@ -20,6 +20,7 @@ data class CarOptionModel(
     @SerializedName("is_use_speed_react_map_scale") var is_use_speed_react_map_scale: Boolean = false,
     @SerializedName("is_show_traffic_in_route") var is_show_traffic_in_route: Boolean = false,
     @SerializedName("is_show_exit_popup_when_stop_driving") var is_show_exit_popup_when_stop_driving: Boolean = true,
+    @SerializedName("use_realtime_auto_reroute") var useRealTimeAutoReroute: Boolean = true,
 ) {
     companion object {
         fun create(jsonString: String): CarOption {
@@ -42,6 +43,7 @@ data class CarOptionModel(
                 isUseSpeedReactMapScale = data.is_use_speed_react_map_scale
                 isShowTrafficInfo = data.show_traffic_accident
                 isShowClosedPopup = data.is_show_exit_popup_when_stop_driving
+                useRealTimeAutoReroute = data.useRealTimeAutoReroute
             }
         }
     }

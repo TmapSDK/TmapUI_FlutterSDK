@@ -27,6 +27,8 @@ SDKConfig _$SDKConfigFromJson(Map<String, dynamic> json) => SDKConfig(
       isShowTrafficInRoute: json['is_show_traffic_in_route'] as bool? ?? true,
       isShowExitPopupWhenStopDriving:
           json['is_show_exit_popup_in_stop_driving'] as bool? ?? true,
+      useRealTimeAutoReroute:
+          json['use_realtime_auto_reroute'] as bool? ?? true,
     );
 
 Map<String, dynamic> _$SDKConfigToJson(SDKConfig instance) => <String, dynamic>{
@@ -40,6 +42,8 @@ Map<String, dynamic> _$SDKConfigToJson(SDKConfig instance) => <String, dynamic>{
       'is_show_traffic_in_route': instance.isShowTrafficInRoute,
       'is_show_exit_popup_when_stop_driving':
           instance.isShowExitPopupWhenStopDriving,
+      'use_realtime_auto_reroute':
+          instance.useRealTimeAutoReroute
     };
 
 const _$UISDKCarModelEnumMap = {

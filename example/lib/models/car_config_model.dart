@@ -10,7 +10,8 @@ class CarConfigModel {
       nightMode: UISDKAutoNightModeType.auto,
       isUseSpeedReactMapScale: true,
       isShowTrafficInRoute: true,
-      isShowExitPopupWhenStopDriving: true);
+      isShowExitPopupWhenStopDriving: true,
+      useRealTimeAutoReroute: true);
 
   SDKConfig get truckConfig => SDKConfig(
       carType: UISDKCarModel.truck,
@@ -21,7 +22,8 @@ class CarConfigModel {
       nightMode: UISDKAutoNightModeType.auto,
       isUseSpeedReactMapScale: true,
       isShowTrafficInRoute: true,
-      isShowExitPopupWhenStopDriving: false);
+      isShowExitPopupWhenStopDriving: false,
+      useRealTimeAutoReroute: false);
 
   UISDKTruckOption get _truckOption => UISDKTruckOption(
       truckHeight: 300, // cm

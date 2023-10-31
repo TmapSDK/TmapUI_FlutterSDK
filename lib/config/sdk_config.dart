@@ -108,6 +108,10 @@ class SDKConfig {
   @JsonKey(name: 'is_show_exit_popup_when_stop_driving')
   bool isShowExitPopupWhenStopDriving = true;
 
+  /// 주행 시 실시간 경로탐색의 실행 여부 on/off
+  @JsonKey(name: 'use_realtime_auto_reroute')
+  bool useRealTimeAutoReroute = true;
+
   SDKConfig({this.carType = UISDKCarModel.normal,
     this.truckOption = null,
     this.fuelType = UISDKFuel.gas,
@@ -116,7 +120,8 @@ class SDKConfig {
     this.nightMode = UISDKAutoNightModeType.auto,
     this.isUseSpeedReactMapScale = true,
     this.isShowTrafficInRoute = true,
-    this.isShowExitPopupWhenStopDriving = true});
+    this.isShowExitPopupWhenStopDriving = true,
+    this.useRealTimeAutoReroute = true});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory SDKConfig.fromJson(Map<String, dynamic> json) => _$SDKConfigFromJson(json);
