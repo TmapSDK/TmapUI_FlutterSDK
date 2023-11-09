@@ -1,3 +1,6 @@
+## 1.0.20
+* UISDK의 fragment를 screen size보다 작게 하는 경우 화면 layout 이상현상 수정(AOS)
+
 ## 1.0.19
 * secondSDI 전달되지 않는 문제 수정 (AOS)
 
