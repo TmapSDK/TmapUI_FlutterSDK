@@ -1,3 +1,6 @@
+## 1.0.21
+* 속도반응형 지도설정 동작하지 않는 버그 수정 (IOS)
+
 ## 1.0.20
 * UISDK의 fragment를 screen size보다 작게 하는 경우 화면 layout 이상현상 수정(AOS)
 
