@@ -30,6 +30,7 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   static const String METHOD_CONFIG_SDK = "configSDK";
   static const String METHOD_CONFIG_MARKER = "configMarker";
   static const String METHOD_STOP_DRIVING = "stopDriving";
+  static const String METHOD_TO_NEXT_VIA_POINT = "toNextViaPointRequest";
 
   StreamSubscription<dynamic>? _tmapSDKStatusStreamSubscription;
   StreamSubscription<dynamic>? _markerStatusStreamSubscription;
@@ -74,6 +75,15 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   Future<bool?> stopDriving() async {
     final configResult = await methodChannel.invokeMethod<String>(
         METHOD_STOP_DRIVING
+    );
+
+    return configResult?.toBoolean();
+  }
+
+  @override
+  Future<bool?> toNextViaPointRequest() async {
+    final configResult = await methodChannel.invokeMethod<String>(
+        METHOD_TO_NEXT_VIA_POINT
     );
 
     return configResult?.toBoolean();

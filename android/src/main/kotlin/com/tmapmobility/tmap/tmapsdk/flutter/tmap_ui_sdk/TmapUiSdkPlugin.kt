@@ -84,6 +84,13 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         TmapUISDK.getFragment().stopDrive()
         result.success("true")
       }
+      "toNextViaPointRequest" -> {
+        if (TmapUISDK.getFragment().toNextViaPointRequest()) {
+          result.success("true")
+        } else {
+          result.success("false")
+        }
+      }
       "configMarker" -> {
         call.argument<String>("args")?.let { ConfigMarkerModel.create(it) }
         if (ConfigMarkerModel.model == null) {

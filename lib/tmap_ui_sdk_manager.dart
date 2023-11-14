@@ -54,6 +54,13 @@ class TmapUISDKManager {
     return result;
   }
 
+  /// 다음경유지로의 안내
+  Future<bool?> toNextViaPointRequest() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    final result = await channel.toNextViaPointRequest();
+    return result;
+  }
+
   StreamSubscription<TmapSDKStatus>? _tmapSDKStatusStreamSubscription;
 
   Future<void> startTmapSDKStatusStream(

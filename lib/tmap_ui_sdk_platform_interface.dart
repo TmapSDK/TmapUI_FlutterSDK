@@ -47,6 +47,10 @@ abstract class TmapUiSdkPlatform extends PlatformInterface {
     throw UnimplementedError('stopDriving() has not been implemented.');
   }
 
+  Future<bool?> toNextViaPointRequest() {
+    throw UnimplementedError('stopDriving() has not been implemented.');
+  }
+
   Future<bool?> configMarker(UISDKMarkerConfig configInfo) {
     throw UnimplementedError('configMarker() has not been implemented.');
   }

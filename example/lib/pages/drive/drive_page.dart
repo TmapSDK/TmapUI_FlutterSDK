@@ -74,6 +74,10 @@ class _DrivePageState extends State<DrivePage> {
     return await TmapUISDKManager().stopDriving();
   }
 
+  Future<bool?> toNextViaPointRequest() async {
+    return await TmapUISDKManager().toNextViaPointRequest();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

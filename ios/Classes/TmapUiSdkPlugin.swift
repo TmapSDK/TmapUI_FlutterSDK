@@ -9,6 +9,7 @@ enum PluginMethod: String {
     case initSDK = "initSDK"
     case configSDK = "configSDK"
     case stopDriving = "stopDriving"
+    case toNextViaPointRequest = "toNextViaPointRequest"
     case configMarker = "configMarker"
 }
 
@@ -94,6 +95,8 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
                 }
             case .stopDriving:
                 stopDriving(result: result)
+            case .toNextViaPointRequest:
+                toNextViaPointRequest(result: result)
             case .configMarker:
                 if let arguments = call.arguments as? [String:Any?],
                    let configJsonString = arguments[TmapUiSdkPluginConstant.kArgs] as? String {
@@ -149,6 +152,14 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
         TmapUISDKManager.shared.requestStop()
         MarkerStreamer.shared.setMarkerInfo(config: nil)
         result(String(true))
+    }
+    
+    private func toNextViaPointRequest(result: @escaping FlutterResult) {
+        if (TmapUISDKManager.shared.toNextViaPointRequest()) {
+            result(String(true))
+        } else {
+            result(String(false))
+        }
     }
     
     private func configMarker(configParam: String, result: @escaping FlutterResult) {
