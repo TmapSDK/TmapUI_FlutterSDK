@@ -11,6 +11,7 @@ enum PluginMethod: String {
     case stopDriving = "stopDriving"
     case toNextViaPointRequest = "toNextViaPointRequest"
     case configMarker = "configMarker"
+    case clearContinueDriveInfo = "clearContinueDriveInfo"
 }
 
 enum PluginInitType: String {
@@ -97,6 +98,8 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
                 stopDriving(result: result)
             case .toNextViaPointRequest:
                 toNextViaPointRequest(result: result)
+            case .clearContinueDriveInfo:
+                clearContinueDriveInfo(result: result)
             case .configMarker:
                 if let arguments = call.arguments as? [String:Any?],
                    let configJsonString = arguments[TmapUiSdkPluginConstant.kArgs] as? String {
@@ -151,6 +154,11 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
     private func stopDriving(result: @escaping FlutterResult) {
         TmapUISDKManager.shared.requestStop()
         MarkerStreamer.shared.setMarkerInfo(config: nil)
+        result(String(true))
+    }
+    
+    private func clearContinueDriveInfo(result: @escaping FlutterResult) {
+        TmapUISDKManager.shared.clearContinueDriveInfo()
         result(String(true))
     }
     

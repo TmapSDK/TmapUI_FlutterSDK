@@ -31,13 +31,14 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   static const String METHOD_CONFIG_MARKER = "configMarker";
   static const String METHOD_STOP_DRIVING = "stopDriving";
   static const String METHOD_TO_NEXT_VIA_POINT = "toNextViaPointRequest";
+  static const String METHOD_CLEAR_CONTINUE_DRIVE_INFO = "clearContinueDriveInfo";
 
   StreamSubscription<dynamic>? _tmapSDKStatusStreamSubscription;
   StreamSubscription<dynamic>? _markerStatusStreamSubscription;
   StreamSubscription<dynamic>? _tmapDriveGuideStreamSubscription;
   StreamSubscription<dynamic>? _tmapDriveStatusStreamSubscription;
 
-  StreamController<TmapSDKStatus>? _tmapSDKStatusController;
+  StreamController<TmapSDKStatusMsg>? _tmapSDKStatusController;
   StreamController<MarkerStatus>? _markerStatusController;
   StreamController<TmapDriveGuide>? _tmapDriveGuideController;
   StreamController<TmapDriveStatus>? _tmapDriveStatusController;
@@ -81,6 +82,15 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   }
 
   @override
+  Future<bool?> clearContinueDriveInfo() async {
+    final configResult = await methodChannel.invokeMethod<String>(
+        METHOD_CLEAR_CONTINUE_DRIVE_INFO
+    );
+
+    return configResult?.toBoolean();
+  }
+
+  @override
   Future<bool?> toNextViaPointRequest() async {
     final configResult = await methodChannel.invokeMethod<String>(
         METHOD_TO_NEXT_VIA_POINT
@@ -100,15 +110,15 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   }
 
   @override
-  Stream<TmapSDKStatus> onStreamedTmapSDKStatus() {
+  Stream<TmapSDKStatusMsg> onStreamedTmapSDKStatus() {
     _installTmapSDKStatusStreamController(
         onListen: _startTmapSDKStatusEventStream);
     return _tmapSDKStatusController!.stream;
   }
 
-  StreamController<TmapSDKStatus> _installTmapSDKStatusStreamController(
+  StreamController<TmapSDKStatusMsg> _installTmapSDKStatusStreamController(
       {Function()? onListen}) {
-    _tmapSDKStatusController = StreamController<TmapSDKStatus>(
+    _tmapSDKStatusController = StreamController<TmapSDKStatusMsg>(
       onListen: onListen ?? () {},
       onCancel: _onTmapSDKStatusStreamCancel,
     );
@@ -117,7 +127,7 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
 
   void _startTmapSDKStatusEventStream() {
     _tmapSDKStatusStreamSubscription =
-        TmapSDKStatusEvent.readings.listen((TmapSDKStatus sdkStatus) {
+        TmapSDKStatusEvent.readings.listen((TmapSDKStatusMsg sdkStatus) {
       _tmapSDKStatusController?.add(sdkStatus);
     });
   }

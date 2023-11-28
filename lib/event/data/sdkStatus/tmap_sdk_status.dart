@@ -1,4 +1,9 @@
+import 'dart:convert';
 import 'dart:core';
+import 'package:json_annotation/json_annotation.dart';
+
+// json serialize를 위해 자동 생성된 file
+part 'tmap_sdk_status.g.dart';
 
 enum TmapSDKStatus {
   /// 초기화 상태
@@ -25,6 +30,8 @@ enum TmapSDKStatus {
   requestPermission('requestPermission'),
   /// SDK의 종료
   finished('finished'),
+  /// 이전 주행정보가 있음을 알림
+  savedDriveInfo('savedDriveInfo'),
 
   ;
   final String text;
@@ -34,4 +41,27 @@ enum TmapSDKStatus {
     return TmapSDKStatus.values.firstWhere((value) => value.text == text,
         orElse: () => TmapSDKStatus.none);
   }
+}
+
+// NOTE. if this class is changed, please run below command in project root folder.
+// $ flutter pub run build_runner build
+@JsonSerializable()
+class TmapSDKStatusMsg {
+  /// SDK의 상태를 나타냅니다.
+  @JsonKey(name: 'sdk_status')
+  TmapSDKStatus? sdkStatus;
+  /// 상태별 부가 정보를 나타냅니다.
+  @JsonKey(name: 'status_extra_data')
+  String extraData = "";
+
+  TmapSDKStatusMsg({this.sdkStatus,
+    this.extraData = "",
+  });
+
+  // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
+  factory TmapSDKStatusMsg.fromJson(Map<String, dynamic> json) => _$TmapSDKStatusMsgFromJson(json);
+  Map<String, dynamic> toJson() => _$TmapSDKStatusMsgToJson(this);
+
+  String toJsonString() => jsonEncode(this.toJson());
+  factory TmapSDKStatusMsg.fromJsonString(String json) => TmapSDKStatusMsg.fromJson(jsonDecode(json));
 }

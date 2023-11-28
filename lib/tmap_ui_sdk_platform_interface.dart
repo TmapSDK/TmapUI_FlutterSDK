@@ -51,11 +51,15 @@ abstract class TmapUiSdkPlatform extends PlatformInterface {
     throw UnimplementedError('stopDriving() has not been implemented.');
   }
 
+  Future<bool?> clearContinueDriveInfo() {
+    throw UnimplementedError('clearContinueDriveInfo() has not been implemented.');
+  }
+
   Future<bool?> configMarker(UISDKMarkerConfig configInfo) {
     throw UnimplementedError('configMarker() has not been implemented.');
   }
 
-  Stream<TmapSDKStatus> onStreamedTmapSDKStatus() {
+  Stream<TmapSDKStatusMsg> onStreamedTmapSDKStatus() {
     throw UnimplementedError('onStreamedTmapSDKStatus() is not implemented.');
   }
 

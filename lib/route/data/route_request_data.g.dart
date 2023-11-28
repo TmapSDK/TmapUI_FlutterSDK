@@ -22,6 +22,7 @@ RouteRequestData _$RouteRequestDataFromJson(Map<String, dynamic> json) =>
           .toList(),
       guideWithoutPreview: json['guide_without_preview'] as bool? ?? false,
       safeDriving: json['safe_driving'] as bool? ?? false,
+      continueDriving: json['continue_driving'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$RouteRequestDataToJson(RouteRequestData instance) =>
@@ -34,6 +35,7 @@ Map<String, dynamic> _$RouteRequestDataToJson(RouteRequestData instance) =>
       'way_points': instance.wayPoints,
       'guide_without_preview': instance.guideWithoutPreview,
       'safe_driving': instance.safeDriving,
+      'continue_driving': instance.continueDriving,
     };
 
 const _$PlanningOptionEnumMap = {

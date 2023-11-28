@@ -8,6 +8,8 @@ import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.CarOptionModel
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.ConfigMarkerModel
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.utils.PreferenceUtils
+import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.TmapSDKStatus
+import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.TmapSDKStatusMsgModel
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
 import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.TmapUiSdkFactory
@@ -84,6 +86,10 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         TmapUISDK.getFragment().stopDrive()
         result.success("true")
       }
+      "clearContinueDriveInfo" -> {
+        TmapUISDK.getFragment().clearContinueDriveInfo()
+        result.success("true")
+      }
       "toNextViaPointRequest" -> {
         if (TmapUISDK.getFragment().toNextViaPointRequest()) {
           result.success("true")
@@ -113,6 +119,9 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         }
         override fun onFail(errorCode: Int, errorMsg: String?) {
           result.success("notGranted")
+        }
+        override fun savedRouteInfoExists(destinationName: String?) {
+          SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.SAVED_DRIVE_INFO,destinationName ?: "NA"))
         }
       })
   }

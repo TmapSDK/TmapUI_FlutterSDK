@@ -10,6 +10,7 @@ import 'package:tmap_ui_sdk/auth/data/init_result.dart';
 import 'package:tmap_ui_sdk/config/marker/uisdk_marker.dart';
 import 'package:tmap_ui_sdk/config/marker/uisdk_marker_config.dart';
 import 'package:tmap_ui_sdk/config/marker/uisdk_marker_point.dart';
+import 'package:tmap_ui_sdk/event/data/sdkStatus/tmap_sdk_status.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_manager.dart';
 import 'package:tmap_ui_sdk_example/common/app_routes.dart';
@@ -17,6 +18,8 @@ import 'package:tmap_ui_sdk_example/models/car_config_model.dart';
 import 'package:tmap_ui_sdk_example/models/drive_model.dart';
 import 'package:tmap_ui_sdk_example/utils/location_utils.dart';
 import 'package:tmap_ui_sdk_example/widgets/common_toast.dart';
+
+import 'package:tmap_ui_sdk_example/utils/continue_drive_utils.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -34,12 +37,37 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
+    TmapUISDKManager().startTmapSDKStatusStream(_onEvent);
     LocationUtils.requestLocationPermission(
         context,
         onGranted: () {
           initPlatformState();
         }
     );
+  }
+
+  void _onEvent(TmapSDKStatusMsg sdkStatus) {
+    switch (sdkStatus.sdkStatus) {
+      case TmapSDKStatus.savedDriveInfo:
+      // 이전 주행정보가 있다. 사용자에게 물어본다.
+        ContinueDriveUtil.askContinueDrive(
+            context,
+            destination: sdkStatus.extraData,
+            onGranted: () {
+              DriveModel.safeDriving = false;
+              DriveModel.continueDriving = true;
+              if (context.mounted) {
+                context.go(AppRoutes.drivePage);
+              }
+            },
+            onNotGranted: () {
+              TmapUISDKManager().clearContinueDriveInfo();
+            }
+        );
+        break;
+      default:
+        break;
+    }
   }
 
   bool isInitWorking = false;
@@ -203,6 +231,7 @@ class _RootPageState extends State<RootPage> {
                     if (!(await checkTmapUISDK())) return;
 
                     DriveModel.safeDriving = false;
+                    DriveModel.continueDriving = false;
                     if (context.mounted) {
                       context.go(AppRoutes.drivePage);
                     }
@@ -215,6 +244,7 @@ class _RootPageState extends State<RootPage> {
                     if (!(await checkTmapUISDK())) return;
 
                     DriveModel.safeDriving = true;
+                    DriveModel.continueDriving = false;
                     if (context.mounted) {
                       context.go(AppRoutes.drivePage);
                     }

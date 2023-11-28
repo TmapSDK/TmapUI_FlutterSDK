@@ -29,12 +29,16 @@ class RouteRequestData {
   @JsonKey(name: 'safe_driving')
   bool safeDriving = false;
 
+  @JsonKey(name: 'continue_driving')
+  bool continueDriving = false;
+
   RouteRequestData({this.source,
     this.destination,
     this.routeOption,
     this.wayPoints,
     this.guideWithoutPreview = false,
-    this.safeDriving = false});
+    this.safeDriving = false,
+    this.continueDriving = false});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory RouteRequestData.fromJson(Map<String, dynamic> json) => _$RouteRequestDataFromJson(json);

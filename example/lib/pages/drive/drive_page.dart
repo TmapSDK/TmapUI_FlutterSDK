@@ -40,8 +40,8 @@ class _DrivePageState extends State<DrivePage> {
     debugPrint('[onDriveGuide] - remainViaPointSize: ${guide.remainViaPointSize}');
   }
 
-  void _onEvent(TmapSDKStatus sdkStatus) {
-    switch (sdkStatus) {
+  void _onEvent(TmapSDKStatusMsg sdkStatus) {
+    switch (sdkStatus.sdkStatus) {
       case TmapSDKStatus.dismissReq:
       // SDK가 종료 되었으니 현재의 widget을 닫는다.
         if (context.mounted) {

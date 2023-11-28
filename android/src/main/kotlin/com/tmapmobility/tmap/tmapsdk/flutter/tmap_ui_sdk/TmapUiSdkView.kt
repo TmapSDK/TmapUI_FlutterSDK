@@ -47,19 +47,19 @@ class FlutterDrivingStatusCallback(activity: FragmentActivity?): TmapUISDK.Drivi
   // 주의. EventChannel.StreamHandler를 이용하여 데이터를 전달하는 경우 uithread에서 해당 내용을 실행하지 않으면 java.lang.RuntimeException이 발생함.
   override fun onStartNavigation() {
     _activity?.get()?.runOnUiThread {
-      SDKStatusStreamer.success(TmapSDKStatusModel.MAP_INITIALIZING)
+      SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.MAP_INITIALIZING,""))
     }
   }
 
   override fun onStopNavigation() {
     _activity?.get()?.runOnUiThread {
-      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
+      SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ,""))
     }
   }
 
   override fun onPermissionDenied(errorCode: Int, errorMsg: String?) {
     _activity?.get()?.runOnUiThread {
-      SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_N_REQUEST_PERMISSION)
+      SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_N_REQUEST_PERMISSION,""))
     }
   }
 
@@ -258,6 +258,8 @@ class TmapUiSdkView(
       if (navigationRequestModel != null) {
         if (navigationRequestModel.safeDriving) {
           navigationFragment.startSafeDrive()
+        } else if (navigationRequestModel.continueDriving) {
+          navigationFragment.continueDrive()
         } else {
           navigationFragment.requestRoute(
             navigationRequestModel.departure,
@@ -274,7 +276,7 @@ class TmapUiSdkView(
                   }
                 }
                 // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
-                SDKStatusStreamer.success(TmapSDKStatusModel.DISMISS_REQ)
+                SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ,""))
               }
             },
             navigationRequestModel.routePlans

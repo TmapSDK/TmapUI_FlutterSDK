@@ -45,6 +45,9 @@ public class TmapViewFactory : NSObject, FlutterPlatformViewFactory {
                 if routeRequestData.safeDriving {
                     TmapUISDKManager.shared.requestSafeDrive()
                     return nativeView
+                } else if routeRequestData.continueDriving {
+                    TmapUISDKManager.shared.continueDrive()
+                    return nativeView
                 } else if let destination = Point(flutterPoint: routeRequestData.destination) {
                     let origin = Point(flutterPoint: routeRequestData.source)
                     let wayPoints = routeRequestData.wayPoints?.map({ Point(flutterPoint: $0) }).compactMap { $0 } ?? []

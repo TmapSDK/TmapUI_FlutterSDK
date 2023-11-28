@@ -13,7 +13,7 @@ import 'auth/data/auth_data.dart';
 import 'auth/data/init_result.dart';
 
 // ignore_for_file: camel_case_types
-typedef onTmapSDKStatusAvailable = Function(TmapSDKStatus status);
+typedef onTmapSDKStatusAvailable = Function(TmapSDKStatusMsg status);
 typedef onMarkerStatusAvailable = Function(MarkerStatus status);
 typedef onTmapDriveGuideAvailable = Function(TmapDriveGuide guide);
 typedef onTmapDriveStatusAvailable = Function(TmapDriveStatus status);
@@ -47,6 +47,13 @@ class TmapUISDKManager {
     return result;
   }
 
+  /// 저장되어 있는 이어가기 주행정보를 삭제합니다.
+  Future<bool?> clearContinueDriveInfo() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    final result = await channel.clearContinueDriveInfo();
+    return result;
+  }
+
   /// custom marker 설정
   Future<bool?> configMarker(UISDKMarkerConfig configInfo) async {
     MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
@@ -61,13 +68,13 @@ class TmapUISDKManager {
     return result;
   }
 
-  StreamSubscription<TmapSDKStatus>? _tmapSDKStatusStreamSubscription;
+  StreamSubscription<TmapSDKStatusMsg>? _tmapSDKStatusStreamSubscription;
 
   Future<void> startTmapSDKStatusStream(
       onTmapSDKStatusAvailable onAvailable) async {
     _tmapSDKStatusStreamSubscription = TmapUiSdkPlatform.instance
         .onStreamedTmapSDKStatus()
-        .listen((TmapSDKStatus status) {
+        .listen((TmapSDKStatusMsg status) {
       onAvailable(status);
     });
   }

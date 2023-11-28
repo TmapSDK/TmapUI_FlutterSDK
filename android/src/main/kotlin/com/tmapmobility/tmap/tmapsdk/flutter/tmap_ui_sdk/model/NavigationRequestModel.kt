@@ -14,6 +14,7 @@ data class NavigationRequestModel(
     var withoutPreview: Boolean,
     var routeRequestListener: TmapUISDK.RouteRequestListener?,
     var safeDriving: Boolean,
+    var continueDriving: Boolean,
     var routePlans: ArrayList<RoutePlanType>?,
 )
 
@@ -23,7 +24,8 @@ data class RouteRequestData(
     @SerializedName("route_options") var routeOptions: ArrayList<String>? = null,
     @SerializedName("way_points") var wayPoints: ArrayList<RoutePoint>? = null,
     @SerializedName("guide_without_preview") var guideWithoutPreview: Boolean = false,
-    @SerializedName("safe_driving") var safeDriving: Boolean = false
+    @SerializedName("safe_driving") var safeDriving: Boolean = false,
+    @SerializedName("continue_driving") var continueDriving: Boolean = false
 ) {
     companion object {
         fun create(jsonString: String): NavigationRequestModel {
@@ -68,6 +70,7 @@ data class RouteRequestData(
                 withoutPreview,
                 routeRequestListener,
                 data.safeDriving,
+                data.continueDriving,
                 routePlans,
             )
         }
