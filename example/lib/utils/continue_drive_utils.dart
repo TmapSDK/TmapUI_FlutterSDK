@@ -22,4 +22,19 @@ class ContinueDriveUtil {
       );
     }
   }
+  static Future<void> alertContinueDrive(BuildContext context,
+      {required String destination, required void Function() onGranted}) async {
+    if (context.mounted) {
+      simpleDialog(
+        context: context,
+        titleText: '저장된 경로정보가 없습니다.',
+        rightButtonText: '네',
+        onRightBtnPressed: () async {
+          onGranted();
+          Navigator.pop(context);
+        },
+        shouldDismissOnTouchOutside: false,
+      );
+    }
+  }
 }

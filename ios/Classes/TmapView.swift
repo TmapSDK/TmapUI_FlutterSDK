@@ -47,6 +47,8 @@ public class TmapViewFactory : NSObject, FlutterPlatformViewFactory {
                     return nativeView
                 } else if routeRequestData.continueDriving {
                     TmapUISDKManager.shared.continueDrive()
+                    // 이어주행에 대한 결과는 TmapUISDKManager에서 state를 설정하면서 flutter쪽으로 전달된다.
+                    // 따라서 여기서는 결과값을 별도 처리하지 않음.
                     return nativeView
                 } else if let destination = Point(flutterPoint: routeRequestData.destination) {
                     let origin = Point(flutterPoint: routeRequestData.source)

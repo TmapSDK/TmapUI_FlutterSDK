@@ -251,6 +251,19 @@ class _RootPageState extends State<RootPage> {
                   },
                   child: const Text('SafeDrive'),
                 ),
+                TextButton(
+                  style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),),
+                  onPressed: () async {
+                    if (!(await checkTmapUISDK())) return;
+
+                    DriveModel.safeDriving = false;
+                    DriveModel.continueDriving = true;
+                    if (context.mounted) {
+                      context.go(AppRoutes.drivePage);
+                    }
+                  },
+                  child: const Text('ContinueDrive'),
+                ),
               ]
           )
       ),

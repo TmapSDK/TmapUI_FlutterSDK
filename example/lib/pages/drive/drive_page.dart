@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tmap_ui_sdk/event/data/driveStatus/tmap_drivestatus.dart';
 import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide.dart';
@@ -7,6 +8,8 @@ import 'package:tmap_ui_sdk/event/data/sdkStatus/tmap_sdk_status.dart';
 import 'package:tmap_ui_sdk/tmap_ui_sdk_manager.dart';
 import 'package:tmap_ui_sdk/widget/tmap_view_widget.dart';
 import 'package:tmap_ui_sdk_example/models/drive_model.dart';
+import 'package:tmap_ui_sdk_example/common/app_routes.dart';
+import 'package:tmap_ui_sdk_example/utils/continue_drive_utils.dart';
 
 // Tmap의 UI와 함께 주행
 class DrivePage extends StatefulWidget {
@@ -45,12 +48,22 @@ class _DrivePageState extends State<DrivePage> {
       case TmapSDKStatus.dismissReq:
       // SDK가 종료 되었으니 현재의 widget을 닫는다.
         if (context.mounted) {
-          Navigator.of(context).popUntil((route){
-            // 주행화면을 닫는다.
-            // example에서는 root page 바로 다음이 주행 화면이므로, root page를 만날때 까지 닫는다..
-            return route.settings.name == '/';
-          });
+          if (context.mounted) {
+            context.go(AppRoutes.rootPage);
+          }
         }
+        break;
+      case TmapSDKStatus.continueDriveRequestedButNoSavedDriveInfo:
+      // 이어가기 요청을 하였으나 저장된 경로 정보가 없다. 현재의 widget을 닫는다.
+        ContinueDriveUtil.alertContinueDrive(
+          context,
+          destination: sdkStatus.extraData,
+          onGranted: () {
+            if (context.mounted) {
+              context.go(AppRoutes.rootPage);
+            }
+          },
+        );
         break;
       default:
         break;

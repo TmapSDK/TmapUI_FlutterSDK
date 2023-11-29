@@ -259,7 +259,10 @@ class TmapUiSdkView(
         if (navigationRequestModel.safeDriving) {
           navigationFragment.startSafeDrive()
         } else if (navigationRequestModel.continueDriving) {
-          navigationFragment.continueDrive()
+          val ret = navigationFragment.continueDrive()
+          if (!ret) {
+            SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.CONTINUE_DRIVE_REQUESTED_NO_SAVED_DRIVE_INFO,""))
+          }
         } else {
           navigationFragment.requestRoute(
             navigationRequestModel.departure,

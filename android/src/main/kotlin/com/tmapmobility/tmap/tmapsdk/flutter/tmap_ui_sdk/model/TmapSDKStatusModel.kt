@@ -37,6 +37,9 @@ enum class TmapSDKStatus(val text: String) {
 
     @SerializedName("savedDriveInfo")
     SAVED_DRIVE_INFO("savedDriveInfo"),
+
+    @SerializedName("continueDriveRequestedButNoSavedDriveInfo")
+    CONTINUE_DRIVE_REQUESTED_NO_SAVED_DRIVE_INFO("continueDriveRequestedButNoSavedDriveInfo"),
 }
 
 data class TmapSDKStatusMsgModel(

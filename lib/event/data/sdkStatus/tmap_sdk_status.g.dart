@@ -33,4 +33,5 @@ const _$TmapSDKStatusEnumMap = {
   TmapSDKStatus.requestPermission: 'requestPermission',
   TmapSDKStatus.finished: 'finished',
   TmapSDKStatus.savedDriveInfo: 'savedDriveInfo',
+  TmapSDKStatus.continueDriveRequestedButNoSavedDriveInfo: 'continueDriveRequestedButNoSavedDriveInfo',
 };

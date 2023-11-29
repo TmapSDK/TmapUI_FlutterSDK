@@ -32,6 +32,8 @@ enum TmapSDKStatus {
   finished('finished'),
   /// 이전 주행정보가 있음을 알림
   savedDriveInfo('savedDriveInfo'),
+  /// 이어가기 요청을 하였으나 저장된 정보가 없음을 알림
+  continueDriveRequestedButNoSavedDriveInfo('continueDriveRequestedButNoSavedDriveInfo'),
 
   ;
   final String text;
