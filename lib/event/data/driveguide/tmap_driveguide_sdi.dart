@@ -81,6 +81,8 @@ enum SDIType {
   @JsonValue("truckHeightLimit") truckHeightLimit('truckHeightLimit'),
   @JsonValue("truckWeightLimit") truckWeightLimit('truckWeightLimit'),
   @JsonValue("truckWideLimit") truckWideLimit('truckWideLimit'),
+  @JsonValue("rearSpeed") rearSpeed('rearSpeed'),
+  @JsonValue("rearSignal") rearSignal('rearSignal'),
   @JsonValue("unknown") unknown('unknown'),
   ;
   final String text;

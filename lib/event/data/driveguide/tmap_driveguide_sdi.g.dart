@@ -114,5 +114,7 @@ const _$SDITypeEnumMap = {
   SDIType.truckHeightLimit: 'truckHeightLimit',
   SDIType.truckWeightLimit: 'truckWeightLimit',
   SDIType.truckWideLimit: 'truckWideLimit',
+  SDIType.rearSpeed: 'rearSpeed',
+  SDIType.rearSignal: 'rearSignal',
   SDIType.unknown: 'unknown',
 };

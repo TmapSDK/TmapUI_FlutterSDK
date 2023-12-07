@@ -153,8 +153,12 @@ enum class SDIType(val value: Int){
     truckWeightLimit(73),
     @SerializedName("truckWideLimit")
     truckWideLimit(74),
+    @SerializedName("rearSpeed")
+    rearSpeed(75),
+    @SerializedName("rearSignal")
+    rearSignal(76),
     @SerializedName("unknown")
-    unknown(75);
+    unknown(77);
 
     companion object {
         infix fun from(value: Int): SDIType =
