@@ -7,6 +7,7 @@ import TmapNaviSDK
 enum PluginMethod: String {
     case getVersion = "getPlatformVersion"
     case initSDK = "initSDK"
+    case finalizeSDK = "finalizeSDK"
     case configSDK = "configSDK"
     case stopDriving = "stopDriving"
     case toNextViaPointRequest = "toNextViaPointRequest"
@@ -87,6 +88,8 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
                 } else {
                     result(PluginInitType.notGranted.rawValue)
                 }
+            case .finalizeSDK:
+                finalizeSDK(result: result)
             case .configSDK:
                 if let arguments = call.arguments as? [String:Any?],
                    let configJsonString = arguments[TmapUiSdkPluginConstant.kArgs] as? String {
@@ -135,6 +138,12 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
             }).store(in: &authCancelable)
         
         TmapUISDKManager.shared.initSDK(initOption: initOption)
+    }
+    
+    private func finalizeSDK(result: @escaping FlutterResult) {
+        authCancelable.cancelAll()
+        TmapUISDKManager.shared.finalizeSDK()
+        result(String(true))
     }
     
     private func configSDK(configParam: String, result: @escaping FlutterResult) {

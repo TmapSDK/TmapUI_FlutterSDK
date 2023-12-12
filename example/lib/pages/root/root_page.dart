@@ -116,6 +116,20 @@ class _RootPageState extends State<RootPage> {
     isInitWorking = false;
   }
 
+  Future<bool?> finalizeSDK() async {
+    var manager = TmapUISDKManager();
+    bool? result = await manager.finalizeSDK();
+    // app은 종료하도록 한다.
+    // Platform별로 종료 코드가 다름에 주의.
+    // https://stackoverflow.com/questions/45109557/flutter-how-to-programmatically-exit-the-app/57534684#57534684
+    if (Platform.isIOS) {
+      exit(0);
+    } else {
+      SystemNavigator.pop();
+    }
+    return result;
+  }
+
   Future<bool?> setTruckConfig() async {
     var manager = TmapUISDKManager();
     CarConfigModel model = context.read<CarConfigModel>();
@@ -263,6 +277,13 @@ class _RootPageState extends State<RootPage> {
                     }
                   },
                   child: const Text('ContinueDrive'),
+                ),
+                TextButton(
+                  style: ButtonStyle(foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),),
+                  onPressed: () {
+                    finalizeSDK();
+                  },
+                  child: const Text('FinalizeSDK'),
                 ),
               ]
           )

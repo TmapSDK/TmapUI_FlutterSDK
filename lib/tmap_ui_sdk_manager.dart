@@ -33,6 +33,13 @@ class TmapUISDKManager {
     return result;
   }
 
+  /// SDK종료
+  Future<bool?> finalizeSDK() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    final result = await channel.finalizeSDK();
+    return result;
+  }
+
   /// SDK설정
   Future<bool?> setConfigSDK(SDKConfig configInfo) async {
     MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();

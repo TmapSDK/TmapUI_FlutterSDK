@@ -69,6 +69,10 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         val deviceKey = json?.getString("device_key") ?: ""
         initializeSDK(clientID, clientApiKey, userKey, deviceKey, result)
       }
+      "finalizeSDK" -> {
+        TmapUISDK.finish()
+        result.success("true")
+      }
       "configSDK" -> {
         val carOption: CarOption? =
           call.argument<String>("args")?.let { CarOptionModel.create(it) }

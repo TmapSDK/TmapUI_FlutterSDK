@@ -27,6 +27,7 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
 
   static const String ARGS_METHOD = "args";
   static const String METHOD_INIT_SDK_INIT = "initSDK";
+  static const String METHOD_FINALIZE_SDK = "finalizeSDK";
   static const String METHOD_CONFIG_SDK = "configSDK";
   static const String METHOD_CONFIG_MARKER = "configMarker";
   static const String METHOD_STOP_DRIVING = "stopDriving";
@@ -60,6 +61,14 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
         {ARGS_METHOD:authInfo.toJsonString()}
     );
     return InitResult.getByText(initResultString ?? InitResult.notGranted.text);
+  }
+
+  @override
+  Future<bool?> finalizeSDK() async {
+    final finalizeResultString = await methodChannel.invokeMethod<String>(
+        METHOD_FINALIZE_SDK
+    );
+    return finalizeResultString?.toBoolean();
   }
 
   @override

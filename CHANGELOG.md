@@ -1,3 +1,7 @@
+## 1.0.26
+* Memory Leak관련 수정 (AOS)
+* SDK finalize interface 추가
+
 ## 1.0.25
 * 후면단속 카메라 관련 버그 수정 (AOS)
 * DriveGuide정보의 SDI type에 후면단속 카메라 관련 정보 추가
