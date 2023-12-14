@@ -1,3 +1,6 @@
+## 1.0.27
+* 인증 후 종료 시 Memory Leak관련 수정 (AOS)
+
 ## 1.0.26
 * Memory Leak관련 수정 (AOS)
 * SDK finalize interface 추가
