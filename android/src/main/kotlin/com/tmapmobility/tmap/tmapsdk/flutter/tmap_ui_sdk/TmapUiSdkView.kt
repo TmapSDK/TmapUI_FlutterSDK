@@ -341,13 +341,15 @@ class TmapUiSdkView(
                 override fun onSuccess() {}
                 override fun onFail(errorCode: Int, errorMsg: String?) {
                   val errorMessage = "error: $errorCode Msg:${errorMsg ?: "NA"}"
+                  Log.e(TAG,"requestRoute - onFail() $errorCode $errorMsg")
                   navigationFragment.activity?.let {
                     it.runOnUiThread {
                       Toast.makeText(it.applicationContext, errorMessage, Toast.LENGTH_SHORT).show()
                     }
                   }
                   // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
-                  SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ, ""))
+                  // 요청 실패에 대한 정보를 extraData로 담아서 전달한다.
+                  SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ, "$errorCode"))
                 }
               },
               navigationRequestModel.routePlans

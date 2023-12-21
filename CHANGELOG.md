@@ -1,3 +1,6 @@
+## 1.0.31
+* AOS 비정상 상황에서 종료 요청 시 errorCode를 전달하도록 수정
+
 ## 1.0.30
 * release mode에서의 IllegalStateException exception발생 현상 방어코드 추가
 
