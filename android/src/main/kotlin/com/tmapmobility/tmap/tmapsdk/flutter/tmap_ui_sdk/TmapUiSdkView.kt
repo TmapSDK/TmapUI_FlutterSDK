@@ -189,6 +189,7 @@ class TmapUiSdkView(
   private val viewId: Int
   private val navigationRequestModel: NavigationRequestModel?
   private var routeRequested: Boolean = false
+  private var getViewCalledCount = 0
 
   private var driveStatusChangedListener : FlutterDrivingStatusCallback? = null
   init {
@@ -248,6 +249,7 @@ class TmapUiSdkView(
 
   override fun getView(): View {
     synchronized(this) {
+      getViewCalledCount += 1
       Log.d(TAG,"getView() start -----------")
       val viewInFragment = navigationFragment.view
       val myParentView = fragmentContainer.parent
@@ -288,18 +290,24 @@ class TmapUiSdkView(
         문제의 상황은 instance가 생성되고 나서 두번째의 getView가 호출되는 시점이다.
        */
 
+      // release mode build를 할 경우는 progurad로 인하여 method의 이름이 변경되므로 아래의 루틴이 동작하지 않음. (debug mode일떄만 정상동작함)
       val exceptionOccurMethod = "initializePlatformViewIfNeeded"
       val callStack = Thread.currentThread().stackTrace
       val callFromInitializePlatformViewIfNeeded = callStack.map { it.methodName }.any { it == exceptionOccurMethod }
 
+      // 문제의 상황은 두번째 call부분이다.
+      // TODO. 추후 flutter 내부의 로직이 변경될 경우 오동작을 일으킬 수도 있으므로 주의해야 한다.
+      val possibleExceptionOccurMethodCall = (getViewCalledCount == 2)
+
       // view가 생성되고 flutter에서 모든 작업이 완료되어 출력하고 있는 상태가 아니라면..
       var parentRemoved = false
       if ((isFragmentHasView && !isFlutterDisplaying && isNotMyParentFromFlutter) ||
-          callFromInitializePlatformViewIfNeeded ){ // 타이밍에 따라 view가 생성되기 전 문제의 코드가 호출되면서 parent를 검사할 때가 있다.
+          callFromInitializePlatformViewIfNeeded || // 타이밍에 따라 view가 생성되기 전 문제의 코드가 호출되면서 parent를 검사할 때가 있다.
+          possibleExceptionOccurMethodCall) { // exception을 발생시키는 call은 두번째 이다.
         (fragmentContainer.parent as ViewGroup).removeView(fragmentContainer as ViewGroup)
         parentRemoved = true
       }
-      Log.d(TAG,"callFromInitializePlatformViewIfNeeded:$callFromInitializePlatformViewIfNeeded isFragmentHasView:$isFragmentHasView isFlutterDisplaying:$isFlutterDisplaying isNotMyParentFromFlutter:$isNotMyParentFromFlutter parentRemoved:$parentRemoved myParentView:$myParentView")
+      Log.d(TAG,"getViewCalledCount:$getViewCalledCount callFromInitializePlatformViewIfNeeded:$callFromInitializePlatformViewIfNeeded isFragmentHasView:$isFragmentHasView isFlutterDisplaying:$isFlutterDisplaying isNotMyParentFromFlutter:$isNotMyParentFromFlutter parentRemoved:$parentRemoved myParentView:$myParentView")
 
       // 요청은 한번만
       if (isFlutterDisplaying && !routeRequested) {

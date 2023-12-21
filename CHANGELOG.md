@@ -1,3 +1,6 @@
+## 1.0.30
+* release mode에서의 IllegalStateException exception발생 현상 방어코드 추가
+
 ## 1.0.29
 * IllegalStateException exception발생 현상 방어코드 추가 (AOS - java.lang.IllegalStateException: The Android view returned from PlatformView#getView() was already added to a parent view.)
 
