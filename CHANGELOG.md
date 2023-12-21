@@ -1,3 +1,6 @@
+## 1.0.29
+* IllegalStateException exception발생 현상 방어코드 추가 (AOS - java.lang.IllegalStateException: The Android view returned from PlatformView#getView() was already added to a parent view.)
+
 ## 1.0.28
 * 차종에 따른 톨게이트 비용 처리 오류 수정 (iOS)
 * 경로 요약화면에서 EV차량인 경우 충전소 표시되지 않던 사항 수정 (iOS, AOS)

@@ -26,11 +26,13 @@ import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.*
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.model.drive_guide.TmapDriveGuideModel
 import android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk.utils.PreferenceUtils
+import android.util.Log
 import android.widget.Toast
 import com.tmapmobility.tmap.tmapsdk.ui.data.CarOption
 import com.tmapmobility.tmap.tmapsdk.ui.data.MapSetting
 import com.tmapmobility.tmap.tmapsdk.ui.fragment.NavigationFragment
 import com.tmapmobility.tmap.tmapsdk.ui.util.TmapUISDK
+import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.mutatorsstack.FlutterMutatorView
 import io.flutter.plugin.platform.PlatformView
 import org.json.JSONObject
@@ -51,6 +53,10 @@ class FlutterDrivingStatusCallback(activity: FragmentActivity?): TmapUISDK.Drivi
     }
   }
 
+  override fun onStartNavigationInfo(totalDistanceInMeter: Int, totalTimeInSec: Int, tollFee: Int) {
+    //TODO. 주행시작 정보 전달루틴 채워야 함.
+  }
+
   override fun onStopNavigation() {
     _activity?.get()?.runOnUiThread {
       SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ,""))
@@ -64,6 +70,7 @@ class FlutterDrivingStatusCallback(activity: FragmentActivity?): TmapUISDK.Drivi
   }
 
   override fun onArrivedDestination(destination: String, drivingTime: Int, drivingDistance: Int) {
+    //TODO. 주행종료 정보 전달루틴 채워야 함.
     _activity?.get()?.runOnUiThread {
       DriveStatusStreamer.success(TmapDriveStatusModel.OnArrivedDestination)
     }
@@ -175,11 +182,13 @@ class TmapUiSdkView(
   context: Context,
   creationParams: Map<*, *>?,
 ) : PlatformView {
+  private val TAG = "TmapUiSdkView"
   private val _context: Context
   private val navigationFragment: NavigationFragment
   private val fragmentContainer: FragmentContainerView
   private val viewId: Int
   private val navigationRequestModel: NavigationRequestModel?
+  private var routeRequested: Boolean = false
 
   private var driveStatusChangedListener : FlutterDrivingStatusCallback? = null
   init {
@@ -238,55 +247,108 @@ class TmapUiSdkView(
   }
 
   override fun getView(): View {
-    val viewInFragment = navigationFragment.view
-    val myParentView = fragmentContainer.parent
+    synchronized(this) {
+      Log.d(TAG,"getView() start -----------")
+      val viewInFragment = navigationFragment.view
+      val myParentView = fragmentContainer.parent
+      val myGrandParentView = myParentView?.parent
 
-    val isFragmentHasView = (viewInFragment != null)
-    // flutter 내부에서 전달한 view에 parent로 FlutterMutatorView를 붙이는데
-    // 이미 parent가 있으면 exception이 발생한다.
-    val isNotMyParentFromFlutter = (myParentView != null && myParentView !is FlutterMutatorView)
-    if (isFragmentHasView && // fragment에 view가 생성된 시점에
-      isNotMyParentFromFlutter // parent가 flutter에서 붙인 view가 아니라면 parent를 삭제
-    ) {
-      (fragmentContainer.parent as ViewGroup).removeView(fragmentContainer as ViewGroup)
+      val isFragmentHasView = (viewInFragment != null)
+      // flutter 내부에서 전달한 view에 parent로 FlutterMutatorView를 붙이는데
+      // 이미 parent가 있으면 exception이 발생한다.
+      val isNotMyParentFromFlutter = (myParentView != null && myParentView !is FlutterMutatorView)
 
-      val mapSetting: MapSetting? = PreferenceUtils.mapSetting
-      if (mapSetting != null) {
-        navigationFragment.setSettings(mapSetting)
-      }
+      val isFlutterDisplaying = (myGrandParentView != null && myGrandParentView is FlutterView)
 
-      if (navigationRequestModel != null) {
-        if (navigationRequestModel.safeDriving) {
-          navigationFragment.startSafeDrive()
-        } else if (navigationRequestModel.continueDriving) {
-          val ret = navigationFragment.continueDrive()
-          if (!ret) {
-            SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.CONTINUE_DRIVE_REQUESTED_NO_SAVED_DRIVE_INFO,""))
+      /*
+        문제의 exception "The Android view returned from PlatformView#getView() was already added to a parent view."은 flutter 내부의 initializePlatformViewIfNeeded 함수에서 벌어짐
+
+        call stack
+          getView:251, TmapUiSdkView (android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk)
+          initializePlatformViewIfNeeded:1051, PlatformViewsController (io.flutter.plugin.platform)
+          onDisplayPlatformView:1115, PlatformViewsController (io.flutter.plugin.platform)
+          onDisplayPlatformView:1398, FlutterJNI (io.flutter.embedding.engine)
+          nativePollOnce:-1, MessageQueue (android.os)
+          next:335, MessageQueue (android.os)
+          loopOnce:186, Looper (android.os)
+          loop:313, Looper (android.os)
+          main:8751, ActivityThread (android.app)
+
+        문제의 코드 (flutter 내부)
+          final View embeddedView = platformView.getView();
+          if (embeddedView == null) {
+            throw new IllegalStateException(
+                "PlatformView#getView() returned null, but an Android view reference was expected.");
           }
-        } else {
-          navigationFragment.requestRoute(
-            navigationRequestModel.departure,
-            navigationRequestModel.wayPoints,
-            navigationRequestModel.destination,
-            navigationRequestModel.withoutPreview,
-            object : TmapUISDK.RouteRequestListener {
-              override fun onSuccess() {}
-              override fun onFail(errorCode: Int, errorMsg: String?) {
-                val errorMessage = "error: $errorCode Msg:${errorMsg ?: "NA"}"
-                navigationFragment.activity?.let {
-                  it.runOnUiThread {
-                    Toast.makeText(it.applicationContext, errorMessage, Toast.LENGTH_SHORT).show()
-                  }
-                }
-                // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
-                SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ,""))
-              }
-            },
-            navigationRequestModel.routePlans
-          )
-        }
+          if (embeddedView.getParent() != null) {
+            throw new IllegalStateException(
+                "The Android view returned from PlatformView#getView() was already added to a parent view."); <-- 이부분
+          }
+
+        문제의 상황은 instance가 생성되고 나서 두번째의 getView가 호출되는 시점이다.
+       */
+
+      val exceptionOccurMethod = "initializePlatformViewIfNeeded"
+      val callStack = Thread.currentThread().stackTrace
+      val callFromInitializePlatformViewIfNeeded = callStack.map { it.methodName }.any { it == exceptionOccurMethod }
+
+      // view가 생성되고 flutter에서 모든 작업이 완료되어 출력하고 있는 상태가 아니라면..
+      var parentRemoved = false
+      if ((isFragmentHasView && !isFlutterDisplaying && isNotMyParentFromFlutter) ||
+          callFromInitializePlatformViewIfNeeded ){ // 타이밍에 따라 view가 생성되기 전 문제의 코드가 호출되면서 parent를 검사할 때가 있다.
+        (fragmentContainer.parent as ViewGroup).removeView(fragmentContainer as ViewGroup)
+        parentRemoved = true
       }
-      setMarker()
+      Log.d(TAG,"callFromInitializePlatformViewIfNeeded:$callFromInitializePlatformViewIfNeeded isFragmentHasView:$isFragmentHasView isFlutterDisplaying:$isFlutterDisplaying isNotMyParentFromFlutter:$isNotMyParentFromFlutter parentRemoved:$parentRemoved myParentView:$myParentView")
+
+      // 요청은 한번만
+      if (isFlutterDisplaying && !routeRequested) {
+        routeRequested = true
+        Log.d(TAG,"request to Navigate!")
+        val mapSetting: MapSetting? = PreferenceUtils.mapSetting
+        if (mapSetting != null) {
+          navigationFragment.setSettings(mapSetting)
+        }
+
+        if (navigationRequestModel != null) {
+          if (navigationRequestModel.safeDriving) {
+            navigationFragment.startSafeDrive()
+          } else if (navigationRequestModel.continueDriving) {
+            val ret = navigationFragment.continueDrive()
+            if (!ret) {
+              SDKStatusStreamer.success(
+                TmapSDKStatusMsgModel(
+                  TmapSDKStatus.CONTINUE_DRIVE_REQUESTED_NO_SAVED_DRIVE_INFO,
+                  ""
+                )
+              )
+            }
+          } else {
+            navigationFragment.requestRoute(
+              navigationRequestModel.departure,
+              navigationRequestModel.wayPoints,
+              navigationRequestModel.destination,
+              navigationRequestModel.withoutPreview,
+              object : TmapUISDK.RouteRequestListener {
+                override fun onSuccess() {}
+                override fun onFail(errorCode: Int, errorMsg: String?) {
+                  val errorMessage = "error: $errorCode Msg:${errorMsg ?: "NA"}"
+                  navigationFragment.activity?.let {
+                    it.runOnUiThread {
+                      Toast.makeText(it.applicationContext, errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                  }
+                  // 경로 요청에 실패하였으므로 widget을 닫아 달라고 요청한다.
+                  SDKStatusStreamer.success(TmapSDKStatusMsgModel(TmapSDKStatus.DISMISS_REQ, ""))
+                }
+              },
+              navigationRequestModel.routePlans
+            )
+          }
+        }
+        setMarker()
+      }
+      Log.d(TAG,"getView() Ends -----------")
     }
     return fragmentContainer
   }

@@ -106,6 +106,8 @@ class TmapDriveGuide {
   @JsonKey(name: 'matched_longitude')
   double matchedLongitude;
 
+  //TODO. 복잡교차로 이미지 전달 추가해야 함.
+
   TmapDriveGuide({this.speedInKmPerHour = 0,
     this.isShadeArea = false,
     this.noLocationSignal = false,
