@@ -7,13 +7,16 @@ import 'package:tmap_ui_sdk/config/uisdk_truck_option.dart';
 part 'sdk_config.g.dart';
 
 enum UISDKCarModel {
-  @JsonValue("CT_COMPACT")      compact('CT_COMPACT'),          // 경차
-  @JsonValue("CT_NORMAL")       normal('CT_NORMAL'),            // 승용차
-  @JsonValue("CT_MIDDLE")       middle('CT_MIDDLE'),            // 중형승합차
-  @JsonValue("CT_LARGE")        large('CT_LARGE'),              // 대형승합차
-  @JsonValue("CT_SMALL_TRUCK")  smallTruck('CT_SMALL_TRUCK'),   // 소형화물차
-  @JsonValue("CT_TRUCK")        truck('CT_TRUCK'),              // 대형화물차
-  @JsonValue("CT_SPECIAL")      special('CT_SPECIAL'),          // 특수화물차
+  @JsonValue("CT_COMPACT")      compact('CT_COMPACT'),          // 경차     - 배기량 800cc미만 경자동차(1000cc미만으로 법개정)
+  @JsonValue("CT_NORMAL")       normal('CT_NORMAL'),            // 승용차    - 2축차량, 윤거 279.4mm이하
+                                                                //          - 승용차
+  @JsonValue("CT_MIDDLE")       middle('CT_MIDDLE'),            // 중형승합차  - 2축차량, 윤거 279.4mm초과 윤거 1,800mm이하
+                                                                //          - 중형승합차(17인승초과~32인승이하), 중형화물차
+  @JsonValue("CT_LARGE")        large('CT_LARGE'),              // 대형승합차  - 2축차량, 윤거 279.4mm초과 윤거 1,800mm초과
+                                                                //          - 대형승합차(33인승 초과), 2축 대형화물차
+  @JsonValue("CT_SMALL_TRUCK")  smallTruck('CT_SMALL_TRUCK'),   // 소형화물차  - 소형승합차(17인승이하), 소형화물차
+  @JsonValue("CT_TRUCK")        truck('CT_TRUCK'),              // 대형화물차  - 3축 대형화물차
+  @JsonValue("CT_SPECIAL")      special('CT_SPECIAL'),          // 특수화물차  - 4축이상 특수화물차
 ;
   final String text;
   const UISDKCarModel(this.text);

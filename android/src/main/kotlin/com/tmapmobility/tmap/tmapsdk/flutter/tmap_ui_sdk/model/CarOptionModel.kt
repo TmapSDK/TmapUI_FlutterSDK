@@ -75,7 +75,7 @@ fun getCarType(type: String): TollCarType {
         "CT_TRUCK" -> TollCarType.LargeTruck
         "CT_SPECIAL" -> TollCarType.SpecialTruck
         "CT_COMPACT" -> TollCarType.SmallCar
-        "CT_SMALL_TRUCK" -> TollCarType.SmallCar
+        "CT_SMALL_TRUCK" -> TollCarType.Car
         else -> TollCarType.TwoWheeledVehicle
     }
 }
