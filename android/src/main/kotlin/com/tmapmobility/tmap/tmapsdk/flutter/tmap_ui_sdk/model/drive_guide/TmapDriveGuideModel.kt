@@ -3,6 +3,7 @@ package android.src.main.kotlin.com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sd
 import android.os.Build
 import android.os.Bundle
 import com.google.gson.annotations.SerializedName
+import com.skt.tmap.engine.navigation.route.RoutePlanType
 import java.io.Serializable
 
 enum class GpsStatus(val value: Int) {
@@ -48,6 +49,9 @@ data class TmapDriveGuideModel(
     @SerializedName("remain_via_point") var remainViaPoint: ArrayList<TmapDriveGuideRemainViaPointModel>? = null,
     @SerializedName("matched_latitude") var matchedLatitude: Double? = null,
     @SerializedName("matched_longitude") var matchedLongitude: Double? = null,
+    @SerializedName("destination_latitude") var destinationLatitude: Double? = null,
+    @SerializedName("destination_longitude") var destinationLongitude: Double? = null,
+    @SerializedName("drive_option") var planningOption: RoutePlanType? = null,
 ) {
     companion object {
         fun create(bundle: Bundle): TmapDriveGuideModel {
@@ -60,6 +64,10 @@ data class TmapDriveGuideModel(
             val remainViaPoint = ArrayList<TmapDriveGuideRemainViaPointModel>()
             var matchedLatitude = bundle.getDouble("matchedLatitude")
             var matchedLongitude = bundle.getDouble("matchedLongitude")
+            val destinationLatitude = bundle.getDouble("destinationLatitude")
+            val destinationLongitude = bundle.getDouble("destinationLongitude")
+            val planningOptionInt = bundle.getInt("currentRoutePlan")
+            val planningOption = RoutePlanType.getRoutePlanType(planningOptionInt)
             remainViaPointMap?.let { remainViaPointMap ->
                 for(i in 0 until remainViaPointSize) {
                     remainViaPointMap.getOrDefault(i.toString(),null)?.let {
@@ -69,6 +77,8 @@ data class TmapDriveGuideModel(
                                 map["viaIdx"] as? Int ?: 0,
                                 map["remainDist"] as? Int ?: 0,
                                 map["remainTime"] as? Int ?: 0,
+                                map["latitude"] as? Double ?: 0.0,
+                                map["longitude"] as? Double ?: 0.0,
                             )
                         )
                     }
@@ -166,7 +176,10 @@ data class TmapDriveGuideModel(
                 bundle.getInt("remainTimeToGoPositionInSec"),
                 remainViaPoint,
                 matchedLatitude,
-                matchedLongitude
+                matchedLongitude,
+                destinationLatitude,
+                destinationLongitude,
+                planningOption
             )
         }
     }

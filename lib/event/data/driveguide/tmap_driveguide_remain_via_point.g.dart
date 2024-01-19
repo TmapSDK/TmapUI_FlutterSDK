@@ -12,6 +12,8 @@ TmapDriveGuideRemainViaPoint _$TmapDriveGuideRemainViaPointFromJson(
       viaIndex: json['via_index'] as int? ?? -1,
       viaDistance: json['via_distance'] as int? ?? -1,
       viaTime: json['via_time'] as int? ?? -1,
+      viaLatitude: json['latitude'] as double? ?? 0,
+      viaLongitude: json['longitude'] as double? ?? 0,
     );
 
 Map<String, dynamic> _$TmapDriveGuideRemainViaPointToJson(
@@ -20,4 +22,6 @@ Map<String, dynamic> _$TmapDriveGuideRemainViaPointToJson(
       'via_index': instance.viaIndex,
       'via_distance': instance.viaDistance,
       'via_time': instance.viaTime,
+      'latitude': instance.viaLatitude,
+      'longitude': instance.viaLongitude,
     };

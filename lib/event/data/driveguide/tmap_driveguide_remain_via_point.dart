@@ -18,10 +18,19 @@ class TmapDriveGuideRemainViaPoint {
   /// 경유지까지의 소요시간 (단위: 초)
   @JsonKey(name: 'via_time')
   int viaTime = -1;
+  /// 경유지의 위도
+  @JsonKey(name: 'latitude')
+  double viaLatitude;
+  /// 경유지까지의 소요시간 (단위: 초)
+  @JsonKey(name: 'longitude')
+  double viaLongitude;
 
   TmapDriveGuideRemainViaPoint({this.viaIndex = -1,
     this.viaDistance = -1,
-    this.viaTime = -1});
+    this.viaTime = -1,
+    this.viaLatitude = 0,
+    this.viaLongitude = 0
+  });
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory TmapDriveGuideRemainViaPoint.fromJson(Map<String, dynamic> json) => _$TmapDriveGuideRemainViaPointFromJson(json);

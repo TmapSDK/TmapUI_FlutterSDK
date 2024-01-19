@@ -5,6 +5,7 @@ import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide_lane.dart';
 import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide_remain_via_point.dart';
 import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide_sdi.dart';
 import 'package:tmap_ui_sdk/event/data/driveguide/tmap_driveguide_tbt.dart';
+import 'package:tmap_ui_sdk/route/data/planning_option.dart';
 
 // json serialize를 위해 자동 생성된 file
 part 'tmap_driveguide.g.dart';
@@ -105,6 +106,15 @@ class TmapDriveGuide {
   /// 현재의 위치정보 (경도)
   @JsonKey(name: 'matched_longitude')
   double matchedLongitude;
+  /// 목적지의 위치정보 (위도)
+  @JsonKey(name: 'destination_latitude')
+  double destinationLatitude;
+  /// 목적지의 위치정보 (경도)
+  @JsonKey(name: 'destination_longitude')
+  double destinationLongitude;
+  /// 주행option
+  @JsonKey(name: 'drive_option')
+  PlanningOption? planningOption;
 
   //TODO. 복잡교차로 이미지 전달 추가해야 함.
 
@@ -132,6 +142,9 @@ class TmapDriveGuide {
     this.remainViaPoint,
     this.matchedLatitude = 0,
     this.matchedLongitude = 0,
+    this.destinationLatitude = 0,
+    this.destinationLongitude = 0,
+    this.planningOption
   });
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
