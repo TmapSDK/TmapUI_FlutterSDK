@@ -1,3 +1,6 @@
+## 1.0.34
+* Privacy Manifest 추가 (iOS)
+
 ## 1.0.33
 * DriveGuide에 목적지위치, 경유지위치정보 추가
 
