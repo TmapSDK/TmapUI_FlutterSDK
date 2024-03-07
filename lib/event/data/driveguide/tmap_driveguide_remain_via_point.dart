@@ -12,6 +12,9 @@ class TmapDriveGuideRemainViaPoint {
   /// 경유지 index (1부터 시작)
   @JsonKey(name: 'via_index')
   int viaIndex = 0;
+  /// 경유지이름
+  @JsonKey(name: 'via_name')
+  String viaName = "";
   /// 경유지까지의 거리 (단위: 미터)
   @JsonKey(name: 'via_distance')
   int viaDistance = -1;
@@ -26,6 +29,7 @@ class TmapDriveGuideRemainViaPoint {
   double viaLongitude;
 
   TmapDriveGuideRemainViaPoint({this.viaIndex = -1,
+    this.viaName = "",
     this.viaDistance = -1,
     this.viaTime = -1,
     this.viaLatitude = 0,

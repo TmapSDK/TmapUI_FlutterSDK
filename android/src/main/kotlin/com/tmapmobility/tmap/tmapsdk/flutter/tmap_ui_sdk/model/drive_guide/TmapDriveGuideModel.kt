@@ -75,6 +75,7 @@ data class TmapDriveGuideModel(
                         remainViaPoint.add(
                             TmapDriveGuideRemainViaPointModel(
                                 map["viaIdx"] as? Int ?: 0,
+                                map["viaName"] as? String ?: "",
                                 map["remainDist"] as? Int ?: 0,
                                 map["remainTime"] as? Int ?: 0,
                                 map["latitude"] as? Double ?: 0.0,
