@@ -49,6 +49,7 @@ data class TmapDriveGuideModel(
     @SerializedName("remain_via_point") var remainViaPoint: ArrayList<TmapDriveGuideRemainViaPointModel>? = null,
     @SerializedName("matched_latitude") var matchedLatitude: Double? = null,
     @SerializedName("matched_longitude") var matchedLongitude: Double? = null,
+    @SerializedName("destination_name") var destinationName: String? = "",
     @SerializedName("destination_latitude") var destinationLatitude: Double? = null,
     @SerializedName("destination_longitude") var destinationLongitude: Double? = null,
     @SerializedName("drive_option") var planningOption: RoutePlanType? = null,
@@ -64,6 +65,7 @@ data class TmapDriveGuideModel(
             val remainViaPoint = ArrayList<TmapDriveGuideRemainViaPointModel>()
             var matchedLatitude = bundle.getDouble("matchedLatitude")
             var matchedLongitude = bundle.getDouble("matchedLongitude")
+            val destinationName = bundle.getString("destinationName") ?: ""
             val destinationLatitude = bundle.getDouble("destinationLatitude")
             val destinationLongitude = bundle.getDouble("destinationLongitude")
             val planningOptionInt = bundle.getInt("currentRoutePlan")
@@ -178,6 +180,7 @@ data class TmapDriveGuideModel(
                 remainViaPoint,
                 matchedLatitude,
                 matchedLongitude,
+                destinationName,
                 destinationLatitude,
                 destinationLongitude,
                 planningOption

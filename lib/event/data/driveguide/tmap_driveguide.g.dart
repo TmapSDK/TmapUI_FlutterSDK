@@ -56,6 +56,7 @@ TmapDriveGuide _$TmapDriveGuideFromJson(Map<String, dynamic> json) =>
           .toList(),
       matchedLatitude: json['matched_latitude'] as double? ?? 0,
       matchedLongitude: json['matched_longitude'] as double? ?? 0,
+      destinationName: json['destination_name'] as String? ?? "",
       destinationLatitude: json['destination_latitude'] as double? ?? 0,
       destinationLongitude: json['destination_longitude'] as double? ?? 0,
       planningOption: $enumDecodeNullable(_$PlanningOptionEnumMap, json['drive_option']),
@@ -91,9 +92,10 @@ Map<String, dynamic> _$TmapDriveGuideToJson(TmapDriveGuide instance) =>
       'remain_via_point': instance.remainViaPoint,
       'matched_latitude': instance.matchedLatitude,
       'matched_longitude': instance.matchedLongitude,
+      'destination_name' : instance.destinationName,
       'destination_latitude' : instance.destinationLatitude,
       'destination_longitude' : instance.destinationLongitude,
-      'drive_option' : instance.planningOption
+      'drive_option': _$PlanningOptionEnumMap[instance.planningOption],
     };
 
 const _$GpsStatusEnumMap = {

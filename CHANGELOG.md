@@ -1,3 +1,7 @@
+## 1.0.36
+* driveGuide정보에 목적지 이름 추가 (AOS,iOS)
+* driveGuide의 json변환문제 수정 (flutter)
+
 ## 1.0.35
 * 남은 경유지 정보에 경유지 이름 추가 (AOS,iOS)
 
