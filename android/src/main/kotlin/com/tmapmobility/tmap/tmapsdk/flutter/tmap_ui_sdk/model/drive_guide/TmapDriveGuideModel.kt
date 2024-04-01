@@ -162,6 +162,7 @@ data class TmapDriveGuideModel(
                     TmapDriveGuideLaneModel.getNLaneTurnInfo(bundle.getIntArray("laneTurnInfo")),
                     TmapDriveGuideLaneModel.getNLaneEtcInfo(bundle.getIntArray("laneEtcInfo")),
                     TmapDriveGuideLaneModel.getAvailableTurn(bundle.getIntArray("laneAvailableInfo")),
+                    TmapDriveGuideLaneModel.getHipassLaneInfo(bundle.getIntArray("hipassLaneInfo")),
                 ),
                 bundle.getBoolean("showSDI"),
                 bundle.getBoolean("isCaution"),

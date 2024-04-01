@@ -63,13 +63,17 @@ class TmapDriveGuideLane {
   /// 주행가능한 회전정보를 나타냅니다. 차선수에 상관없이 가능한 회전은 1개만 존재합니다.
   @JsonKey(name: 'available_turn')
   LaneTurnType availableTurn = LaneTurnType.strait;
+  /// 하이패스 차선의 정보를 나타냅니다..
+  @JsonKey(name: 'hipass_lane_info')
+  List<int>? hipassLaneInfo;
 
   TmapDriveGuideLane({this.showLane = false,
     this.laneCount = 0,
     this.laneDistance = 0,
     this.nLaneTurnInfo,
     this.nLaneEtcInfo,
-    this.availableTurn = LaneTurnType.strait});
+    this.availableTurn = LaneTurnType.strait,
+    this.hipassLaneInfo});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory TmapDriveGuideLane.fromJson(Map<String, dynamic> json) => _$TmapDriveGuideLaneFromJson(json);

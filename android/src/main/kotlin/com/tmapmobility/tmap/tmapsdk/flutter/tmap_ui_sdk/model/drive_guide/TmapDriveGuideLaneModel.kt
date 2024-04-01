@@ -55,6 +55,7 @@ data class TmapDriveGuideLaneModel(
     @SerializedName("lane_turn_info") var nLaneTurnInfo: ArrayList<ArrayList<LaneTurnType>>? = null,
     @SerializedName("lane_etc_info") var nLaneEtcInfo: ArrayList<ArrayList<LaneEtcType>>? = null,
     @SerializedName("available_turn") var availableTurn: LaneTurnType = LaneTurnType.Strait,
+    @SerializedName("hipass_lane_info") var hipassLaneInfo: ArrayList<Int>? = null,
 ) {
     companion object {
         fun getNLaneTurnInfo(intArray: IntArray?): ArrayList<ArrayList<LaneTurnType>>? {
@@ -82,6 +83,11 @@ data class TmapDriveGuideLaneModel(
         fun getAvailableTurn(intArray: IntArray?): LaneTurnType {
             if (intArray == null) return LaneTurnType.Strait
             return LaneTurnType.from(intArray.first())
+        }
+
+        fun getHipassLaneInfo(intArray: IntArray?): ArrayList<Int>? {
+            if (intArray == null) return null
+            return intArray.toCollection(ArrayList())
         }
     }
 }

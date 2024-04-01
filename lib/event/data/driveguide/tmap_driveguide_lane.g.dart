@@ -24,6 +24,9 @@ TmapDriveGuideLane _$TmapDriveGuideLaneFromJson(Map<String, dynamic> json) =>
       availableTurn:
           $enumDecodeNullable(_$LaneTurnTypeEnumMap, json['available_turn']) ??
               LaneTurnType.strait,
+      hipassLaneInfo: (json['hipass_lane_info'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
     );
 
 Map<String, dynamic> _$TmapDriveGuideLaneToJson(TmapDriveGuideLane instance) =>
@@ -38,6 +41,7 @@ Map<String, dynamic> _$TmapDriveGuideLaneToJson(TmapDriveGuideLane instance) =>
           ?.map((e) => e.map((e) => _$LaneEtcTypeEnumMap[e]!).toList())
           .toList(),
       'available_turn': _$LaneTurnTypeEnumMap[instance.availableTurn]!,
+      'hipass_lane_info': instance.hipassLaneInfo,
     };
 
 const _$LaneTurnTypeEnumMap = {
