@@ -106,6 +106,9 @@ class TmapDriveGuide {
   /// 현재의 위치정보 (경도)
   @JsonKey(name: 'matched_longitude')
   double matchedLongitude;
+  /// 현재 각도
+  @JsonKey(name: 'current_course_angle')
+  int currentCourseAngle;
   /// 목적지의 이름
   @JsonKey(name: 'destination_name')
   String destinationName = "";
@@ -145,6 +148,7 @@ class TmapDriveGuide {
     this.remainViaPoint,
     this.matchedLatitude = 0,
     this.matchedLongitude = 0,
+    this.currentCourseAngle = 0,
     this.destinationName = "",
     this.destinationLatitude = 0,
     this.destinationLongitude = 0,
