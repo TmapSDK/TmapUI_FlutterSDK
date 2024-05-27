@@ -1,3 +1,6 @@
+## 1.0.42
+* AOS UISDK version 수정
+
 ## 1.0.41
 * TmapDriveGuide정보에 현재 주행중인 각도 정보 추가 (AOS,IOS)
 
