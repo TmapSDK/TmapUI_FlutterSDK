@@ -30,6 +30,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 33
+    namespace "com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
