@@ -42,8 +42,6 @@ flutter:
       android:
         package: com.tmapmobility.tmap.tmapsdk.flutter.tmap_ui_sdk
         pluginClass: TmapUiSdkPlugin
-      ios:
-        pluginClass: TmapUiSdkPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
