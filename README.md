@@ -205,3 +205,12 @@ end
 &lt;/dict>
 &lt;/plist>
 </code></pre>
+
+# Background 동작 on/off
+* iOS Background 동작을 위한 필수 조건
+	* initSDK 시점에 isAvailableInBackground 값을 true로 설정(기본값 false)
+	* Xcode 프로젝트 파일 > 앱 타겟 > Signing & Capabilities > Background Mode 추가
+		* Location Updates, Audio, Background fetch, Background processing 활성화
+* 공통
+	* setConfigSDK 시점에 suspendInBackground 값을 false로 설정(기본값 true)
+	* true인 경우는 앱이 Background라운드 진입시 동작이 stop 됐다가 Foreground로 오면 재개됨
