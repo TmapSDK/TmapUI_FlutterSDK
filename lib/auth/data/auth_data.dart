@@ -42,6 +42,11 @@ class AuthData {
   @JsonKey(name: 'client_device_id')
   String clientDeviceId;
 
+  /// SDK가 백그라운드에서 동작할지 여부 on/off
+  /// true로 한다면 Xcode에서 Background Mode > Location을 필수로 켜줘야 함.
+  @JsonKey(name: 'is_available_in_background')
+  bool isAvailableInBackground;
+
   AuthData({this.clientServiceName = "",
       this.clientAppVersion = "",
       this.clientID = "",
@@ -49,7 +54,8 @@ class AuthData {
       this.clientApCode = "",
       this.userKey = "",
       this.deviceKey = "",
-      this.clientDeviceId = ""});
+      this.clientDeviceId = "",
+      this.isAvailableInBackground = false});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory AuthData.fromJson(Map<String, dynamic> json) => _$AuthDataFromJson(json);

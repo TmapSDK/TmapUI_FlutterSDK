@@ -115,6 +115,11 @@ class SDKConfig {
   @JsonKey(name: 'use_realtime_auto_reroute')
   bool useRealTimeAutoReroute = true;
 
+  /// 앱이 백그라운드로 내려갔을때 suspend 시킬지 여부 on/off
+  /// off(백그라운드에서 동작)가 정상동작하려면, auth_data의 isAvailableInBackground가 true 여야 함.
+  @JsonKey(name: 'suspend_in_background')
+  bool suspendInBackground = true;
+
   SDKConfig({this.carType = UISDKCarModel.normal,
     this.truckOption = null,
     this.fuelType = UISDKFuel.gas,
@@ -124,7 +129,8 @@ class SDKConfig {
     this.isUseSpeedReactMapScale = true,
     this.isShowTrafficInRoute = true,
     this.isShowExitPopupWhenStopDriving = true,
-    this.useRealTimeAutoReroute = true});
+    this.useRealTimeAutoReroute = true,
+    this.suspendInBackground = true});
 
   // ref : https://flutter-ko.dev/docs/development/data-and-backend/json
   factory SDKConfig.fromJson(Map<String, dynamic> json) => _$SDKConfigFromJson(json);

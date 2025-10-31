@@ -15,6 +15,7 @@ AuthData _$AuthDataFromJson(Map<String, dynamic> json) => AuthData(
       userKey: json['user_key'] as String? ?? "",
       deviceKey: json['device_key'] as String? ?? "",
       clientDeviceId: json['client_device_id'] as String? ?? "",
+      isAvailableInBackground: json['is_available_in_background'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$AuthDataToJson(AuthData instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$AuthDataToJson(AuthData instance) => <String, dynamic>{
       'user_key': instance.userKey,
       'device_key': instance.deviceKey,
       'client_device_id': instance.clientDeviceId,
+      'is_available_in_background': instance.isAvailableInBackground,
     };

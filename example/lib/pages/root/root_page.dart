@@ -94,7 +94,8 @@ class _RootPageState extends State<RootPage> {
           clientApCode: "",
           userKey: [발급받은 user key 또는 빈문자열],
           deviceKey: [발급받은 device key 또는 빈문자열],
-          clientDeviceId: ""
+          clientDeviceId: "",
+          isAvailableInBackground: true
       );
       InitResult result = await manager.initSDK(authInfo) ?? InitResult.notGranted;
       tmapUISDKInitResult = result;

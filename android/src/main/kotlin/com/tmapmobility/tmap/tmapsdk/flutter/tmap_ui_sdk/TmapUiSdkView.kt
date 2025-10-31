@@ -14,6 +14,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.skt.tmap.engine.navigation.network.ndds.NddsDataType
 import com.skt.tmap.engine.navigation.route.RoutePlanType
 import com.skt.tmap.vsm.data.VSMMapPoint
+import com.skt.tmap.vsm.location.LocationComponent
 import com.skt.tmap.vsm.map.MapEngine
 import com.skt.tmap.vsm.map.marker.MarkerImage
 import com.skt.tmap.vsm.map.marker.VSMMarkerBase
@@ -175,6 +176,16 @@ class FlutterDrivingStatusCallback(activity: FragmentActivity?): TmapUISDK.Drivi
   }
 
   override fun onLocationChanged() {}
+
+  override fun onRouteOptionChanged(originalOption: RoutePlanType, changedOption: RoutePlanType) {
+    _activity?.get()?.runOnUiThread {
+      DriveStatusStreamer.success(TmapDriveStatusModel.OnRouteChanged)
+    }
+  }
+
+  override fun onTryToStopNavigation(): Boolean {
+    return true
+  }
 
 }
 
@@ -471,6 +482,10 @@ class TmapUiSdkView(
     }
 
     override fun OnHitObjectNone(vsmMapPoint: VSMMapPoint?): Boolean {
+      return false
+    }
+
+    override fun OnHitObjectLocationComponent(p0: LocationComponent?, p1: VSMMapPoint?): Boolean {
       return false
     }
   }

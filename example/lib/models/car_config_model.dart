@@ -11,7 +11,8 @@ class CarConfigModel {
       isUseSpeedReactMapScale: true,
       isShowTrafficInRoute: true,
       isShowExitPopupWhenStopDriving: true,
-      useRealTimeAutoReroute: true);
+      useRealTimeAutoReroute: true,
+      suspendInBackground: false);
 
   SDKConfig get truckConfig => SDKConfig(
       carType: UISDKCarModel.truck,

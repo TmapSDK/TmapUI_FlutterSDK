@@ -4,6 +4,7 @@ include ':app'
 
 
 
+project(':tmap-cits-sdk').projectDir = file('./../../../../tmap-cits-sdk')
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
 def properties = new Properties()
