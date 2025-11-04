@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'TmapUISDK', '1.0.35'
+  s.dependency 'TmapUISDK', '1.0.36'
 
   s.ios.deployment_target = '13.0' # to use Combine
 
