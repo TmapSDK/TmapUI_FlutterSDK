@@ -34,9 +34,6 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
 
-  # alamofire 5.9.0부터 crash발생.
-  pod 'Alamofire', '<= 5.8.1'
-
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
 
