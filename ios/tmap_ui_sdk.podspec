@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'tmap_ui_sdk'
-  s.version          = '1.0.37'
+  s.version          = '1.0.38'
   s.summary          = 'TmapUISDK for flutter'
   s.homepage              = "https://www.tmapmobility.com/"
   s.license       = {
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'TmapUISDK', '1.0.37'
+  s.dependency 'TmapUISDK', '1.0.38'
 
   s.ios.deployment_target = '13.0' # to use Combine
 

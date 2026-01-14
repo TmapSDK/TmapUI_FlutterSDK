@@ -137,19 +137,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 </code></pre>
 <br></br>
 
-* Alamofire의 버전 확인
-	* 현재 Alamofire 5.9.0을 이용하는 경우 iOS에서 crash가 발생하는 현상이 있습니다.
-    * 5.8.1 이하의 버전을 이용하는 경우는 정상 동작 합니다.
-    * 따라서 Alamofire의 버전을 5.8.1 이하로 설정하는 작업이 필요합니다.
-<pre><code>
-target 'Runner' do
-  # alamofire 5.9.0부터 crash발생.
-  pod 'Alamofire', '<= 5.8.1'
-end
-</code></pre>
-<br></br>
-
-
 * Compile option 지정
 	* SDK내부에서 참조하는 3rdparty library를 정상적으로 Runtime에 link하기 위하여, BUILD_LIBRARY_FOR_DISTRIBUTION를 YES로 설정합니다.
     * 권한 확인을 위하여 사용하는 permission_handler의 위치권한을 활성화 하기 위한 macro를 설정합니다. (PERMISSION_LOCATION=1)
