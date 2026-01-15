@@ -59,6 +59,22 @@ abstract class TmapUiSdkPlatform extends PlatformInterface {
     throw UnimplementedError('configMarker() has not been implemented.');
   }
 
+  Future<int> getMaxVolume() {
+    throw UnimplementedError('getMaxVolume() has not been implemented.');
+  }
+
+  Future<int> getVolume() {
+    throw UnimplementedError('getVolume() has not been implemented.');
+  }
+
+  Future<void> setVolume(int volume) {
+    throw UnimplementedError('setVolume() has not been implemented.');
+  }
+
+  Future<void> runSoundCheck() {
+    throw UnimplementedError('runSoundCheck() has not been implemented.');
+  }
+
   Stream<TmapSDKStatusMsg> onStreamedTmapSDKStatus() {
     throw UnimplementedError('onStreamedTmapSDKStatus() is not implemented.');
   }

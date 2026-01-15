@@ -33,6 +33,8 @@ class _RootPageState extends State<RootPage> {
   String _initStatus = "Unknown";
   final _tmapUiSdkPlugin = TmapUiSdk();
   InitResult tmapUISDKInitResult = InitResult.notGranted;
+  int _maxVolume = 10;
+  int _volume = 0;
 
   @override
   void initState() {
@@ -42,6 +44,7 @@ class _RootPageState extends State<RootPage> {
         context,
         onGranted: () {
           initPlatformState();
+          _loadVolumeInfo();
         }
     );
   }
@@ -200,6 +203,30 @@ class _RootPageState extends State<RootPage> {
     return file.path;
   }
 
+  Future<void> _loadVolumeInfo() async {
+    if (!(await checkTmapUISDK())) return;
+
+    var manager = TmapUISDKManager();
+    final maxVolume = await manager.getMaxVolume();
+    final currentVolume = await manager.getVolume();
+    if (!mounted) return;
+
+    setState(() {
+      if (maxVolume > 0) {
+        _maxVolume = maxVolume;
+      }
+      _volume = currentVolume;
+    });
+  }
+
+  Future<void> _setVolume(int volume) async {
+    if (!(await checkTmapUISDK())) return;
+    var manager = TmapUISDKManager();
+    await manager.setVolume(volume);
+    await manager.runSoundCheck();
+    await _loadVolumeInfo();
+  }
+
   Future<bool> checkTmapUISDK() async {
     if (tmapUISDKInitResult == InitResult.notGranted) {
       await initPlatformState();
@@ -285,6 +312,24 @@ class _RootPageState extends State<RootPage> {
                     finalizeSDK();
                   },
                   child: const Text('FinalizeSDK'),
+                ),
+                const SizedBox(height: 16),
+                Text('Max Volume: $_maxVolume'),
+                Text('Current Volume: $_volume'),
+                Slider(
+                  min: 0,
+                  max: _maxVolume.toDouble(),
+                  divisions: _maxVolume > 0 ? _maxVolume : null,
+                  value: _volume.clamp(0, _maxVolume).toDouble(),
+                  label: '$_volume',
+                  onChanged: (value) {
+                    setState(() {
+                      _volume = value.round();
+                    });
+                  },
+                  onChangeEnd: (value) {
+                    _setVolume(value.round());
+                  },
                 ),
               ]
           )

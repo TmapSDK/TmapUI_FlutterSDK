@@ -109,6 +109,23 @@ class TmapUiSdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           result.success("true")
         }
       }
+      "setVolume" -> {
+        val volume = call.argument<Number>("args")?.toInt()
+        if (volume != null) {
+          TmapUISDK.setVolume(activity, volume)
+        }
+        result.success(null)
+      }
+      "getMaxVolume" -> {
+        result.success(TmapUISDK.getMaxVolume(activity))
+      }
+      "getVolume" -> {
+        result.success(TmapUISDK.getVolume(activity))
+      }
+      "runSoundCheck" -> {
+        TmapUISDK.runSoundCheck(activity)
+        result.success(null)
+      }
       else -> {
         result.notImplemented()
       }

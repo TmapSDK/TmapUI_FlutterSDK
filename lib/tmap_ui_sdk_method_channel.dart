@@ -33,6 +33,10 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
   static const String METHOD_STOP_DRIVING = "stopDriving";
   static const String METHOD_TO_NEXT_VIA_POINT = "toNextViaPointRequest";
   static const String METHOD_CLEAR_CONTINUE_DRIVE_INFO = "clearContinueDriveInfo";
+  static const String METHOD_GET_MAX_VOLUME = "getMaxVolume";
+  static const String METHOD_GET_VOLUME = "getVolume";
+  static const String METHOD_SET_VOLUME = "setVolume";
+  static const String METHOD_RUN_SOUND_CHECK = "runSoundCheck";
 
   StreamSubscription<dynamic>? _tmapSDKStatusStreamSubscription;
   StreamSubscription<dynamic>? _markerStatusStreamSubscription;
@@ -116,6 +120,37 @@ class MethodChannelTmapUiSdk extends TmapUiSdkPlatform {
     );
 
     return configResult?.toBoolean();
+  }
+
+  @override
+  Future<int> getMaxVolume() async {
+    final volume = await methodChannel.invokeMethod<int>(
+      METHOD_GET_MAX_VOLUME
+    );
+    return volume ?? -1;
+  }
+
+  @override
+  Future<int> getVolume() async {
+    final volume = await methodChannel.invokeMethod<int>(
+      METHOD_GET_VOLUME
+    );
+    return volume ?? -1;
+  }
+
+  @override
+  Future<void> setVolume(int volume) async {
+    await methodChannel.invokeMethod<void>(
+      METHOD_SET_VOLUME,
+      {ARGS_METHOD: volume}
+    );
+  }
+
+  @override
+  Future<void> runSoundCheck() async {
+    await methodChannel.invokeMethod<void>(
+      METHOD_RUN_SOUND_CHECK
+    );
   }
 
   @override

@@ -75,6 +75,32 @@ class TmapUISDKManager {
     return result;
   }
 
+  /// 최대 볼륨 반환
+  Future<int> getMaxVolume() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    final result = await channel.getMaxVolume();
+    return result;
+  }
+
+  /// 현재 볼륨 반환
+  Future<int> getVolume() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    final result = await channel.getVolume();
+    return result;
+  }
+
+  /// 음성 안내 볼륨 설정
+  Future<void> setVolume(int volume) async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    await channel.setVolume(volume);
+  }
+
+  /// 사운드 체크 실행
+  Future<void> runSoundCheck() async {
+    MethodChannelTmapUiSdk channel = MethodChannelTmapUiSdk();
+    await channel.runSoundCheck();
+  }
+
   StreamSubscription<TmapSDKStatusMsg>? _tmapSDKStatusStreamSubscription;
 
   Future<void> startTmapSDKStatusStream(

@@ -13,6 +13,10 @@ enum PluginMethod: String {
     case toNextViaPointRequest = "toNextViaPointRequest"
     case configMarker = "configMarker"
     case clearContinueDriveInfo = "clearContinueDriveInfo"
+    case getMaxVolume = "getMaxVolume"
+    case getVolume = "getVolume"
+    case setVolume = "setVolume"
+    case runSoundCheck = "runSoundCheck"
 }
 
 enum PluginInitType: String {
@@ -110,6 +114,22 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
                 } else {
                     result(String(false))
                 }
+            case .getMaxVolume:
+                getMaxVolume(result: result)
+            case .getVolume:
+                getVolume(result: result)
+            case .setVolume:
+                if let arguments = call.arguments as? [String:Any?],
+                   let volume = arguments[TmapUiSdkPluginConstant.kArgs] as? Int {
+                    setVolume(volume: volume, result: result)
+                } else if let arguments = call.arguments as? [String:Any?],
+                          let volume = arguments[TmapUiSdkPluginConstant.kArgs] as? NSNumber {
+                    setVolume(volume: volume.intValue, result: result)
+                } else {
+                    result(String(false))
+                }
+            case .runSoundCheck:
+                runSoundCheck(result: result)
             default:
                 tmapLog("Unknown Method - \(call.method)")
         }
@@ -191,5 +211,23 @@ public class TmapUiSdkPlugin: NSObject, FlutterPlugin {
         sdkConfig.updateMapViewDelegate(delegate: MarkerStreamer.shared)
         TmapUISDKManager.shared.setConfig(config: sdkConfig)
         result(String(true))
+    }
+
+    private func getMaxVolume(result: @escaping FlutterResult) {
+        result(TmapUISDKManager.shared.getMaxVolume())
+    }
+
+    private func getVolume(result: @escaping FlutterResult) {
+        result(TmapUISDKManager.shared.getVolume())
+    }
+
+    private func setVolume(volume: Int, result: @escaping FlutterResult) {
+        TmapUISDKManager.shared.setVolume(volume)
+        result(nil)
+    }
+
+    private func runSoundCheck(result: @escaping FlutterResult) {
+        TmapUISDKManager.shared.runSoundCheck()
+        result(nil)
     }
 }
